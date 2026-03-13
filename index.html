@@ -9,176 +9,276 @@
 <script src="/topojson.min.js"></script>
 <style>
 :root{
-  --bg:#f0f4f8;--bg2:#ffffff;--bg3:#e8eef5;--bg4:#dde5f0;
-  --border:#c5d3e0;--border2:#a8bcd0;
-  --t1:#00a878;--t2:#e6a817;--t3:#e05a2b;--blue:#2563eb;
-  --val:#00a878;--pros:#e6a817;--cli:#7c3aed;
-  --text:#1a2535;--muted:#64748b;--dim:#94a3b8;
+  --black:#000000;
+  --black2:#0a0a0a;
+  --black3:#111111;
+  --black4:#1a1a1a;
+  --black5:#222222;
+  --green:#00ff88;
+  --green2:#00cc6a;
+  --green3:#009944;
+  --amber:#ffb800;
+  --red:#ff4444;
+  --blue:#4488ff;
+  --purple:#aa44ff;
+  --border:#2a2a2a;
+  --border2:#333333;
+  --text:#e8e8e8;
+  --muted:#888888;
+  --dim:#555555;
+  --t1:#00ff88;
+  --t2:#ffb800;
+  --t3:#ff4444;
+  --val:#00ff88;
+  --pros:#ffb800;
+  --cli:#aa44ff;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Space Mono','Courier New',monospace;}
+html,body{height:100%;overflow:hidden;background:var(--black);color:var(--text);font-family:'Space Mono','Courier New',monospace;}
 #app{display:flex;flex-direction:column;height:100vh;}
 
 /* HEADER */
-#header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;gap:16px;}
-.brand-title{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:3px;color:var(--t1);white-space:nowrap;}
-.brand-title span{color:var(--blue);}
-.brand-sub{font-size:7px;letter-spacing:2px;color:var(--muted);margin-top:1px;}
+#header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:56px;
+  background:var(--black);
+  border-bottom:1px solid var(--green);
+  flex-shrink:0;gap:20px;
+}
+.brand-title{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:4px;color:var(--green);white-space:nowrap;}
+.brand-title span{color:#fff;}
+.brand-sub{font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:2px;}
 
-/* SEARCH BAR */
-#searchbar{display:flex;gap:6px;flex:1;max-width:500px;}
-#search-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:6px 10px;color:var(--text);font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;outline:none;}
-#search-input::placeholder{color:var(--muted);}
-#search-input:focus{border-color:var(--t1);}
-#search-btn{background:var(--t1);border:none;border-radius:4px;padding:6px 12px;color:#000;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;letter-spacing:2px;cursor:pointer;}
-#search-type{background:var(--bg3);border:1px solid var(--border2);border-radius:4px;padding:6px 8px;color:var(--text);font-family:'Space Mono',monospace;font-size:8px;outline:none;}
+/* SEARCH */
+#searchbar{display:flex;gap:6px;flex:1;max-width:460px;}
+#search-type{background:var(--black3);border:1px solid var(--border2);border-radius:3px;padding:8px 10px;color:var(--text);font-family:'Space Mono',monospace;font-size:10px;outline:none;}
+#search-input{flex:1;background:var(--black3);border:1px solid var(--border2);border-radius:3px;padding:8px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:11px;outline:none;letter-spacing:1px;}
+#search-input::placeholder{color:var(--dim);}
+#search-input:focus{border-color:var(--green);}
+#search-btn{background:var(--green);border:none;border-radius:3px;padding:8px 16px;color:#000;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;cursor:pointer;white-space:nowrap;}
+#search-btn:hover{background:var(--green2);}
 
 /* STATS */
-#stats{display:flex;gap:16px;align-items:center;flex-shrink:0;}
+#stats{display:flex;gap:20px;align-items:center;flex-shrink:0;}
 .stat{text-align:center;}
-.stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;}
-.stat-lbl{font-size:6px;letter-spacing:2px;color:var(--muted);}
+.stat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;line-height:1;}
+.stat-lbl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:2px;}
+#admin-btn{background:transparent;border:1px solid var(--border2);border-radius:3px;padding:7px 14px;color:var(--muted);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;cursor:pointer;}
+#admin-btn:hover{border-color:var(--green);color:var(--green);}
+
+/* BREADCRUMB */
+#breadcrumb{
+  padding:8px 16px;background:var(--black2);
+  border-bottom:1px solid var(--border);
+  font-size:10px;color:var(--muted);letter-spacing:2px;
+  display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+#breadcrumb .bc-link{cursor:pointer;color:var(--green);}
+#breadcrumb .bc-link:hover{color:#fff;}
+#breadcrumb .sep{color:var(--border2);}
 
 /* BODY */
 #body{display:flex;flex:1;overflow:hidden;}
 
 /* SIDEBAR */
-#sidebar{width:185px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:12px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;}
-.sec-lbl{font-size:7px;letter-spacing:3px;color:var(--muted);margin-bottom:6px;}
-.ctrl{display:flex;align-items:center;gap:6px;padding:5px 8px;margin-bottom:2px;border-radius:3px;cursor:pointer;font-size:8px;letter-spacing:2px;font-family:'Space Mono',monospace;border:1px solid transparent;transition:all .15s;color:var(--muted);background:transparent;user-select:none;}
-.ctrl:hover{color:var(--text);}
-.ctrl.on{background:#0f1e33;color:var(--t1);border-color:#00FFB320;}
-.ctrl.on.c2{color:var(--t2);border-color:#FFD23420;}
-.ctrl.on.c3{color:var(--t3);border-color:#FF7A4A20;}
-.ctrl.on.ca{color:var(--text);border-color:#ffffff15;}
-.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+#sidebar{
+  width:220px;flex-shrink:0;
+  background:var(--black2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transition:width .2s ease;
+  position:relative;
+}
+#sidebar.collapsed{width:48px;}
 
-/* BUILDER TYPE FILTERS */
-.type-filter{display:flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:2px;border-radius:3px;cursor:pointer;font-size:7px;letter-spacing:1px;border:1px solid transparent;transition:all .15s;color:var(--muted);}
-.type-filter.on{border-color:currentColor;opacity:1;}
-.type-filter:not(.on){opacity:.5;}
+/* TOGGLE BTN */
+#sb-toggle{
+  position:absolute;top:10px;right:10px;
+  width:24px;height:24px;
+  background:var(--black4);border:1px solid var(--border2);
+  border-radius:3px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--muted);z-index:10;
+  flex-shrink:0;
+}
+#sb-toggle:hover{border-color:var(--green);color:var(--green);}
 
-/* BREADCRUMB */
-#breadcrumb{padding:6px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:8px;color:var(--muted);letter-spacing:2px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
-#breadcrumb span{cursor:pointer;color:var(--blue);}
-#breadcrumb span:hover{color:var(--t1);}
-#breadcrumb .sep{color:var(--border2);}
+#sb-content{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:18px;}
+#sidebar.collapsed #sb-content{display:none;}
+
+/* SIDEBAR ICONS (collapsed state) */
+#sb-icons{display:none;flex-direction:column;align-items:center;gap:14px;padding:48px 0 14px;}
+#sidebar.collapsed #sb-icons{display:flex;}
+.sb-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:14px;border-radius:4px;cursor:pointer;color:var(--muted);}
+.sb-icon:hover{color:var(--green);}
+.sb-icon.active{color:var(--green);}
+
+.sec-lbl{font-size:9px;letter-spacing:3px;color:var(--muted);margin-bottom:10px;font-weight:700;}
+
+/* VIEW BUTTONS */
+.view-btn{
+  display:block;width:100%;padding:9px 10px;margin-bottom:5px;
+  border-radius:3px;cursor:pointer;font-size:10px;letter-spacing:2px;
+  font-family:'Space Mono',monospace;border:1px solid var(--border);
+  transition:all .15s;color:var(--muted);background:transparent;text-align:left;
+}
+.view-btn:hover{color:var(--text);border-color:var(--border2);}
+.view-btn.on{background:var(--black4);color:var(--green);border-color:var(--green);}
+
+/* CHECKBOXES / RADIOS */
+.chk-row{display:flex;align-items:center;gap:10px;padding:6px 0;cursor:pointer;user-select:none;}
+.chk-row input{width:15px;height:15px;cursor:pointer;flex-shrink:0;}
+.chk-row input[type=checkbox]{accent-color:var(--green);}
+.chk-row input[type=radio]{accent-color:var(--green);}
+.chk-label{font-size:11px;letter-spacing:1px;font-family:'Space Mono',monospace;display:flex;align-items:center;gap:7px;}
+.cdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* LEGEND */
+.leg-item{margin-bottom:8px;}
+.leg-row{display:flex;align-items:center;gap:8px;}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.leg-name{font-size:10px;letter-spacing:1px;}
+.leg-desc{font-size:9px;color:var(--muted);padding-left:18px;margin-top:2px;}
+
+/* HOVER CARD */
+#hcard{margin-top:auto;padding:10px;background:var(--black4);border-radius:4px;border:1px solid var(--border2);display:none;}
+.hc-st{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:#fff;margin-bottom:3px;}
+.hc-ct{font-size:10px;color:var(--muted);margin-bottom:6px;}
+.hc-r{font-size:10px;margin-bottom:2px;}
 
 /* MAP */
 #mapwrap{flex:1;position:relative;overflow:hidden;}
 #mapsvg{width:100%;height:100%;display:block;}
-#hint{position:absolute;bottom:10px;right:12px;font-size:7px;color:var(--dim);letter-spacing:2px;pointer-events:none;}
-#loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:var(--bg);z-index:10;transition:opacity 0.3s;}#loader.hidden{display:none!important;opacity:0;pointer-events:none;}
-.spin{width:32px;height:32px;border:2px solid #00FFB318;border-top-color:var(--t1);border-radius:50%;animation:sp .9s linear infinite;}
-.ltxt{font-size:8px;color:var(--muted);letter-spacing:3px;}
+#hint{position:absolute;bottom:12px;right:14px;font-size:9px;color:var(--dim);letter-spacing:2px;pointer-events:none;}
+#loader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;background:var(--black);z-index:10;}
+#loader.hidden{display:none!important;}
+.spin{width:36px;height:36px;border:2px solid #00ff8820;border-top-color:var(--green);border-radius:50%;animation:sp .9s linear infinite;}
+.ltxt{font-size:10px;color:var(--muted);letter-spacing:4px;}
 @keyframes sp{to{transform:rotate(360deg);}}
 
 /* PANEL */
-#panel{width:320px;flex-shrink:0;background:var(--bg2);border-left:1px solid var(--border);display:none;flex-direction:column;overflow:hidden;}
+#panel{width:340px;flex-shrink:0;background:var(--black2);border-left:1px solid var(--border);display:none;flex-direction:column;overflow:hidden;}
 #panel.open{display:flex;}
-#ph{padding:11px 12px 9px;border-bottom:1px solid var(--border);background:var(--bg3);flex-shrink:0;}
-#pstate{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#fff;line-height:1;}
-#psub{font-size:7px;letter-spacing:3px;color:var(--muted);margin-top:2px;}
-#pcls{background:none;border:1px solid var(--border2);border-radius:3px;color:var(--muted);cursor:pointer;padding:3px 8px;font-size:10px;font-family:'Space Mono',monospace;}
-#pcls:hover{color:var(--text);}
-#psum{display:flex;gap:5px;margin-top:8px;}
-.sb{flex:1;background:var(--bg);border-radius:3px;padding:5px 3px;text-align:center;border:1px solid var(--border);}
-.sv{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;}
-.sl{font-size:6px;letter-spacing:2px;color:var(--muted);}
-#blist{flex:1;overflow-y:auto;padding:8px;}
+
+/* PANEL HEADER */
+#ph{padding:16px;border-bottom:1px solid var(--border);background:var(--black);flex-shrink:0;}
+#ph-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+#pstate{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;color:#fff;line-height:1;letter-spacing:2px;}
+#psub{font-size:10px;letter-spacing:3px;color:var(--muted);margin-top:4px;}
+#pcls{background:none;border:1px solid var(--border2);border-radius:3px;color:var(--muted);cursor:pointer;padding:5px 10px;font-size:12px;font-family:'Space Mono',monospace;}
+#pcls:hover{border-color:var(--green);color:var(--green);}
+#psum{display:flex;gap:6px;}
+.sb{flex:1;background:var(--black3);border-radius:3px;padding:8px 4px;text-align:center;border:1px solid var(--border);}
+.sv{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;}
+.sl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-top:2px;}
+
+#blist{flex:1;overflow-y:auto;padding:10px;}
 
 /* BUILDER CARDS */
-.bc{margin-bottom:5px;border-radius:4px;border:1px solid var(--border);cursor:pointer;transition:all .15s;overflow:hidden;}
+.bc{margin-bottom:6px;border-radius:4px;border:1px solid var(--border);cursor:pointer;transition:all .15s;overflow:hidden;background:var(--black3);}
 .bc:hover{border-color:var(--border2);}
-.bc.op{background:var(--bg3);border-color:var(--border2);}
-.bh{padding:8px 9px;}
-.bnr{display:flex;align-items:center;gap:5px;margin-bottom:2px;}
-.bdot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.bn{font-size:9px;font-weight:700;color:#e0e6f5;flex:1;line-height:1.3;}
-.btb{font-size:6px;padding:1px 5px;border-radius:2px;flex-shrink:0;letter-spacing:1px;}
-.btype{font-size:6px;padding:1px 5px;border-radius:2px;flex-shrink:0;letter-spacing:1px;}
-.bm{font-size:7px;color:var(--muted);padding-left:10px;}
+.bc.op{background:var(--black4);border-color:var(--green);}
+.bh{padding:10px 12px;}
+.bnr{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.bdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.bn{font-size:12px;font-weight:700;color:#fff;flex:1;line-height:1.3;}
+.btb{font-size:8px;padding:2px 7px;border-radius:2px;flex-shrink:0;letter-spacing:1px;font-weight:700;}
+.btype{font-size:8px;padding:2px 7px;border-radius:2px;flex-shrink:0;letter-spacing:1px;}
+.bm{font-size:10px;color:var(--muted);padding-left:14px;}
 
 /* EXPANDED CARD */
-.bd{padding:0 9px 9px;}
-.bdiv{height:1px;background:var(--border);margin:4px 0 9px;}
+.bd{padding:0 12px 12px;}
+.bdiv{height:1px;background:var(--border);margin:6px 0 12px;}
 
-/* AI */
-.ai-sec{margin-bottom:9px;}
-.ai-hdr{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.ai-ico{width:16px;height:16px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0;}
-.ai-lbl{font-size:7px;letter-spacing:2px;font-weight:700;}
-.ai-load{display:flex;align-items:center;gap:8px;padding:8px;background:var(--bg4);border-radius:4px;border:1px solid var(--border);}
-.ai-sp{width:12px;height:12px;border:1.5px solid #00FFB318;border-top-color:var(--t1);border-radius:50%;animation:sp .9s linear infinite;flex-shrink:0;}
-.ai-lt{font-size:7px;color:var(--muted);letter-spacing:1px;}
-.ai-box{background:var(--bg4);border-radius:4px;border:1px solid var(--border);overflow:hidden;}
-.ai-item{padding:7px 9px;border-bottom:1px solid var(--border);}
+/* AI SECTIONS */
+.ai-sec{margin-bottom:12px;}
+.ai-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ai-ico{width:20px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.ai-lbl{font-size:10px;letter-spacing:2px;font-weight:700;}
+.ai-load{display:flex;align-items:center;gap:10px;padding:10px;background:var(--black4);border-radius:4px;border:1px solid var(--border);}
+.ai-sp{width:14px;height:14px;border:1.5px solid #00ff8818;border-top-color:var(--green);border-radius:50%;animation:sp .9s linear infinite;flex-shrink:0;}
+.ai-lt{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.ai-box{background:var(--black4);border-radius:4px;border:1px solid var(--border);overflow:hidden;}
+.ai-item{padding:9px 11px;border-bottom:1px solid var(--border);}
 .ai-item:last-child{border-bottom:none;}
-.ai-n{font-size:6px;color:var(--muted);margin-bottom:2px;letter-spacing:1px;}
-.ai-t{font-size:8px;color:var(--text);line-height:1.6;}
+.ai-n{font-size:8px;color:var(--muted);margin-bottom:3px;letter-spacing:2px;}
+.ai-t{font-size:10px;color:var(--text);line-height:1.7;}
 
 /* RATINGS */
-.rat-row{display:flex;gap:5px;margin-bottom:8px;}
-.rat-box{flex:1;background:var(--bg4);border-radius:4px;padding:6px 5px;text-align:center;border:1px solid var(--border);}
-.rat-src{font-size:6px;letter-spacing:2px;color:var(--muted);margin-bottom:2px;}
-.rat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:13px;}
-.rat-st{font-size:7px;margin-top:1px;}
+.rat-row{display:flex;gap:6px;margin-bottom:10px;}
+.rat-box{flex:1;background:var(--black4);border-radius:4px;padding:8px 6px;text-align:center;border:1px solid var(--border);}
+.rat-src{font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:3px;}
+.rat-val{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;}
 
-/* VALIDATED FIELDS */
-.vfield-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:8px;}
-.vfield{background:var(--bg4);border-radius:3px;padding:5px 6px;border:1px solid var(--border);}
-.vfl{font-size:6px;letter-spacing:2px;color:var(--muted);margin-bottom:1px;}
-.vfv{font-size:9px;color:var(--text);word-break:break-all;}
+/* FIELDS */
+.vfield-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px;}
+.vfield{background:var(--black4);border-radius:3px;padding:7px 8px;border:1px solid var(--border);}
+.vfl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:2px;}
+.vfv{font-size:11px;color:var(--text);word-break:break-all;}
 
 /* LINKS */
-.links-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
-.lbtn{padding:5px 8px;border-radius:3px;text-decoration:none;font-size:7px;letter-spacing:1px;font-family:'Space Mono',monospace;cursor:pointer;transition:opacity .15s;border:1px solid;display:inline-block;}
+.links-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+.lbtn{padding:6px 10px;border-radius:3px;text-decoration:none;font-size:10px;letter-spacing:1px;font-family:'Space Mono',monospace;cursor:pointer;transition:opacity .15s;border:1px solid;display:inline-block;}
 .lbtn:hover{opacity:.75;}
 
 /* STATS GRID */
-.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:7px;}
-.sf{background:var(--bg4);border-radius:3px;padding:5px 6px;border:1px solid var(--border);}
-.sfl{font-size:6px;letter-spacing:2px;color:var(--muted);margin-bottom:1px;}
-.sfv{font-family:'Syne',sans-serif;font-weight:700;font-size:10px;}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px;}
+.sf{background:var(--black4);border-radius:3px;padding:7px 8px;border:1px solid var(--border);}
+.sfl{font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:2px;}
+.sfv{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;}
 
-/* ACTIONS */
-.bacts{display:flex;gap:4px;}
-.bbtn{flex:1;padding:6px;font-size:7px;letter-spacing:1px;border-radius:3px;cursor:pointer;font-family:'Space Mono',monospace;transition:opacity .15s;}
-.bbtn:hover{opacity:.8;}
-.bg{background:#00FFB315;border:1px solid #00FFB328;color:var(--t1);}
-.bb{background:#5585ff15;border:1px solid #5585ff28;color:var(--blue);}
+/* ACTION BUTTONS */
+.bacts{display:flex;gap:6px;}
+.bbtn{flex:1;padding:9px;font-size:10px;letter-spacing:1px;border-radius:3px;cursor:pointer;font-family:'Space Mono',monospace;font-weight:700;transition:all .15s;border:1px solid;}
+.bbtn:hover{opacity:.85;}
+.bg{background:#00ff8812;border-color:#00ff8840;color:var(--green);}
+.bb{background:#4488ff12;border-color:#4488ff40;color:var(--blue);}
 
-/* ADD BUILDER MODAL */
-#modal-overlay{position:fixed;inset:0;background:#000000aa;z-index:100;display:none;align-items:center;justify-content:center;}
-#modal-overlay.open{display:flex;}
-#modal{background:var(--bg2);border:1px solid var(--border2);border-radius:8px;padding:20px;width:480px;max-height:80vh;overflow-y:auto;}
-.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--t1);margin-bottom:16px;letter-spacing:2px;}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
-.form-field{display:flex;flex-direction:column;gap:4px;}
+/* PANEL FOOTER */
+#pfoot{padding:10px 14px;border-top:1px solid var(--border);flex-shrink:0;display:flex;justify-content:space-between;align-items:center;}
+#pfoot-label{font-size:9px;letter-spacing:2px;color:var(--dim);}
+.add-builder-btn{background:var(--green);border:none;border-radius:3px;padding:7px 14px;color:#000;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;}
+.add-builder-btn:hover{background:var(--green2);}
+
+/* ── MODALS ── */
+.overlay{position:fixed;inset:0;background:#000000dd;z-index:100;display:none;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--black2);border:1px solid var(--border2);border-radius:6px;padding:24px;max-height:88vh;overflow-y:auto;}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--green);margin-bottom:16px;letter-spacing:2px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+.form-field{display:flex;flex-direction:column;gap:5px;}
 .form-field.full{grid-column:1/-1;}
-.form-label{font-size:7px;letter-spacing:2px;color:var(--muted);}
-.form-input{background:var(--bg4);border:1px solid var(--border2);border-radius:3px;padding:6px 8px;color:var(--text);font-family:'Space Mono',monospace;font-size:9px;outline:none;}
-.form-input:focus{border-color:var(--t1);}
-.form-select{background:var(--bg4);border:1px solid var(--border2);border-radius:3px;padding:6px 8px;color:var(--text);font-family:'Space Mono',monospace;font-size:9px;outline:none;}
+.form-label{font-size:9px;letter-spacing:2px;color:var(--muted);}
+.form-input,.form-select{background:var(--black4);border:1px solid var(--border2);border-radius:3px;padding:8px 10px;color:var(--text);font-family:'Space Mono',monospace;font-size:11px;outline:none;}
+.form-input:focus,.form-select:focus{border-color:var(--green);}
 .modal-actions{display:flex;gap:8px;margin-top:16px;}
-.modal-btn{flex:1;padding:8px;font-size:8px;letter-spacing:2px;border-radius:4px;cursor:pointer;font-family:'Space Mono',monospace;font-weight:700;}
-.modal-save{background:var(--t1);border:none;color:#000;}
+.modal-btn{flex:1;padding:10px;font-size:10px;letter-spacing:2px;border-radius:4px;cursor:pointer;font-family:'Space Mono',monospace;font-weight:700;}
+.modal-save{background:var(--green);border:none;color:#000;}
+.modal-save:hover{background:var(--green2);}
 .modal-cancel{background:none;border:1px solid var(--border2);color:var(--muted);}
+.modal-cancel:hover{border-color:var(--green);color:var(--green);}
 
-/* HOVER CARD */
-#hcard{margin-top:auto;padding:9px;background:var(--bg3);border-radius:4px;border:1px solid var(--border2);display:none;}
-.hc-st{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#fff;margin-bottom:2px;}
-.hc-ct{font-size:7px;color:var(--muted);margin-bottom:5px;}
-.hc-r{font-size:7px;margin-bottom:1px;}
+/* ADMIN MODAL */
+#admin-modal{width:500px;}
+.tier-block{margin-bottom:14px;padding:14px;border-radius:5px;border:1px solid;}
+.tier-block.t1{border-color:#00ff8830;background:#00ff8808;}
+.tier-block.t2{border-color:#ffb80030;background:#ffb80008;}
+.tier-block.t3{border-color:#ff444430;background:#ff444408;}
+.tier-head{font-size:11px;letter-spacing:2px;font-weight:700;margin-bottom:12px;}
+.tier-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.tier-field label{display:block;font-size:8px;letter-spacing:2px;color:var(--muted);margin-bottom:5px;}
+.tier-field input{width:100%;background:var(--black4);border:1px solid var(--border2);border-radius:3px;padding:8px;color:var(--text);font-family:'Space Mono',monospace;font-size:13px;outline:none;}
+.tier-field input:focus{border-color:var(--green);}
 
-/* ADMIN PANEL */
-#admin-btn{background:var(--bg3);border:1px solid var(--border);border-radius:3px;padding:5px 10px;color:var(--muted);font-family:'Space Mono',monospace;font-size:7px;letter-spacing:2px;cursor:pointer;}
-#admin-btn:hover{color:var(--text);}
+/* EMAIL MODAL */
+#email-modal{width:560px;}
+.email-label{font-size:9px;letter-spacing:2px;color:var(--muted);margin-bottom:5px;margin-top:10px;}
+.email-label:first-child{margin-top:0;}
 
-#pfoot{padding:6px 12px;border-top:1px solid var(--border);font-size:7px;letter-spacing:2px;color:var(--dim);text-align:center;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;}
-.add-builder-btn{background:var(--t1);border:none;border-radius:3px;padding:4px 10px;color:#000;font-family:'Space Mono',monospace;font-size:7px;font-weight:700;letter-spacing:1px;cursor:pointer;}
-
-::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
 </style>
 </head>
 <body>
@@ -191,87 +291,97 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="brand-sub">CLEAR MODERN MORTGAGE &nbsp;&middot;&nbsp; GEOGRAPHIC PIPELINE</div>
   </div>
   <div id="searchbar">
-    <select id="search-type" onchange="updateSearchPlaceholder()">
+    <select id="search-type">
       <option value="zip">ZIP CODE</option>
       <option value="city">CITY</option>
       <option value="county">COUNTY</option>
-      <option value="radius">RADIUS (mi)</option>
+      <option value="state">STATE</option>
     </select>
-    <input id="search-input" type="text" placeholder="Enter ZIP code..." onkeydown="if(event.key==='Enter')doSearch()"/>
+    <input id="search-input" type="text" placeholder="Search by ZIP, city, county or state..." onkeydown="if(event.key==='Enter')doSearch()"/>
     <button id="search-btn" onclick="doSearch()">SEARCH</button>
   </div>
   <div id="stats">
-    <div class="stat"><div class="stat-val" id="sa" style="color:#e8eef8">0</div><div class="stat-lbl">BUILDERS</div></div>
+    <div class="stat"><div class="stat-val" id="sa" style="color:#fff">0</div><div class="stat-lbl">BUILDERS</div></div>
     <div class="stat"><div class="stat-val" id="s1" style="color:var(--t1)">0</div><div class="stat-lbl">TIER 1</div></div>
     <div class="stat"><div class="stat-val" id="s2" style="color:var(--t2)">0</div><div class="stat-lbl">TIER 2</div></div>
     <div class="stat"><div class="stat-val" id="s3" style="color:var(--t3)">0</div><div class="stat-lbl">TIER 3</div></div>
     <div class="stat"><div class="stat-val" id="ss" style="color:var(--blue)">0</div><div class="stat-lbl">STATES</div></div>
-    <button id="admin-btn" onclick="toggleAdmin()">&#9881; ADMIN</button>
+    <button id="admin-btn" onclick="openAdmin()">&#9881; ADMIN</button>
   </div>
 </div>
 
 <!-- BREADCRUMB -->
 <div id="breadcrumb">
-  <span onclick="drillUp('nation')">&#127758; USA</span>
-  <span class="sep" id="bc-state" style="display:none">&rsaquo; <span id="bc-state-name" onclick="drillUp('state')" style="cursor:pointer;color:var(--blue)"></span></span>
+  <span class="bc-link" onclick="drillUp('nation')">&#127758; USA</span>
+  <span class="sep" id="bc-state" style="display:none">&rsaquo; <span id="bc-state-name" class="bc-link" onclick="drillUp('state')"></span></span>
 </div>
 
 <div id="body">
 
 <!-- SIDEBAR -->
 <div id="sidebar">
-  <div>
-    <div class="sec-lbl">VIEW MODE</div>
-    <div class="ctrl on" id="bdn" onclick="setMode('density')">DENSITY MAP</div>
-    <div class="ctrl" id="bht" onclick="setMode('heat')">TIER HEAT MAP</div>
+  <div id="sb-toggle" onclick="toggleSidebar()">&#9776;</div>
+
+  <!-- COLLAPSED ICONS -->
+  <div id="sb-icons">
+    <div class="sb-icon" title="Density Map" onclick="setMode('density')">&#9632;</div>
+    <div class="sb-icon" title="Heat Map" onclick="setMode('heat')">&#9830;</div>
+    <div class="sb-icon active" title="Filters" onclick="expandSidebar()">&#9783;</div>
+    <div class="sb-icon" title="Legend" onclick="expandSidebar()">&#9632;</div>
   </div>
-  <div>
-    <div class="sec-lbl">FILTER TIER</div>
-    <div class="ctrl on ca" id="bal" onclick="setFilter(0)">ALL TIERS</div>
-    <div class="ctrl" id="bt1" onclick="setFilter(1)"><div class="dot" style="background:var(--t1)"></div>TIER 1</div>
-    <div class="ctrl" id="bt2" onclick="setFilter(2)"><div class="dot" style="background:var(--t2)"></div>TIER 2</div>
-    <div class="ctrl" id="bt3" onclick="setFilter(3)"><div class="dot" style="background:var(--t3)"></div>TIER 3</div>
-  </div>
-  <div>
-    <div class="sec-lbl">BUILDER TYPE</div>
-    <div class="type-filter on" id="tf-val" onclick="toggleType('validated')" style="color:var(--val)"><div class="dot" style="background:var(--val)"></div>VALIDATED</div>
-    <div class="type-filter on" id="tf-pro" onclick="toggleType('prospects')" style="color:var(--pros)"><div class="dot" style="background:var(--pros)"></div>PROSPECTS</div>
-    <div class="type-filter on" id="tf-cli" onclick="toggleType('clientBrought')" style="color:var(--cli)"><div class="dot" style="background:var(--cli)"></div>CLIENT BROUGHT</div>
-    <div class="type-filter on" id="tf-scr" onclick="toggleType('scraped')" style="color:var(--muted)"><div class="dot" style="background:var(--muted)"></div>SCRAPED</div>
-  </div>
-  <div>
-    <div class="sec-lbl">LEGEND</div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:7px;height:7px;border-radius:2px;background:var(--t1)"></div><span style="font-size:7px;color:var(--t1);letter-spacing:1px">TIER 1</span></div>
-      <div style="font-size:7px;color:var(--muted);padding-left:13px;line-height:1.5">Top producers</div>
+
+  <!-- EXPANDED CONTENT -->
+  <div id="sb-content">
+
+    <div>
+      <div class="sec-lbl">VIEW MODE</div>
+      <button class="view-btn on" id="bdn" onclick="setMode('density')">&#9632; DENSITY</button>
+      <button class="view-btn" id="bht" onclick="setMode('heat')">&#9830; TIER HEAT MAP</button>
     </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:7px;height:7px;border-radius:2px;background:var(--t2)"></div><span style="font-size:7px;color:var(--t2);letter-spacing:1px">TIER 2</span></div>
-      <div style="font-size:7px;color:var(--muted);padding-left:13px;line-height:1.5">Mid-tier, growing</div>
+
+    <div>
+      <div class="sec-lbl">FILTER TIER</div>
+      <label class="chk-row"><input type="radio" name="tier" value="0" checked onchange="setFilter(0)"><span class="chk-label">ALL TIERS</span></label>
+      <label class="chk-row"><input type="radio" name="tier" value="1" onchange="setFilter(1)"><span class="chk-label"><span class="cdot" style="background:var(--t1)"></span>TIER 1</span></label>
+      <label class="chk-row"><input type="radio" name="tier" value="2" onchange="setFilter(2)"><span class="chk-label"><span class="cdot" style="background:var(--t2)"></span>TIER 2</span></label>
+      <label class="chk-row"><input type="radio" name="tier" value="3" onchange="setFilter(3)"><span class="chk-label"><span class="cdot" style="background:var(--t3)"></span>TIER 3</span></label>
     </div>
-    <div style="margin-bottom:8px">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:7px;height:7px;border-radius:2px;background:var(--t3)"></div><span style="font-size:7px;color:var(--t3);letter-spacing:1px">TIER 3</span></div>
-      <div style="font-size:7px;color:var(--muted);padding-left:13px;line-height:1.5">Prospect / cold</div>
+
+    <div>
+      <div class="sec-lbl">BUILDER TYPE</div>
+      <label class="chk-row"><input type="checkbox" checked onchange="toggleType('validated')"><span class="chk-label" style="color:var(--val)"><span class="cdot" style="background:var(--val)"></span>VALIDATED</span></label>
+      <label class="chk-row"><input type="checkbox" checked onchange="toggleType('prospects')"><span class="chk-label" style="color:var(--pros)"><span class="cdot" style="background:var(--pros)"></span>PROSPECTS</span></label>
+      <label class="chk-row"><input type="checkbox" checked onchange="toggleType('clientBrought')"><span class="chk-label" style="color:var(--cli)"><span class="cdot" style="background:var(--cli)"></span>CLIENT BROUGHT</span></label>
+      <label class="chk-row"><input type="checkbox" checked onchange="toggleType('scraped')"><span class="chk-label" style="color:var(--muted)"><span class="cdot" style="background:var(--muted)"></span>SCRAPED</span></label>
     </div>
-  </div>
-  <div id="hcard">
-    <div class="hc-st" id="hcs"></div>
-    <div class="hc-ct" id="hcc"></div>
-    <div id="hct"></div>
-  </div>
-</div>
+
+    <div>
+      <div class="sec-lbl">LEGEND</div>
+      <div class="leg-item"><div class="leg-row"><div class="leg-sq" style="background:var(--t1)"></div><span class="leg-name" style="color:var(--t1)">TIER 1</span></div><div class="leg-desc">Top producers</div></div>
+      <div class="leg-item"><div class="leg-row"><div class="leg-sq" style="background:var(--t2)"></div><span class="leg-name" style="color:var(--t2)">TIER 2</span></div><div class="leg-desc">Mid-tier, growing</div></div>
+      <div class="leg-item"><div class="leg-row"><div class="leg-sq" style="background:var(--t3)"></div><span class="leg-name" style="color:var(--t3)">TIER 3</span></div><div class="leg-desc">Prospect / cold</div></div>
+    </div>
+
+    <div id="hcard">
+      <div class="hc-st" id="hcs"></div>
+      <div class="hc-ct" id="hcc"></div>
+      <div id="hct"></div>
+    </div>
+
+  </div><!-- end sb-content -->
+</div><!-- end sidebar -->
 
 <!-- MAP -->
 <div id="mapwrap">
   <div id="loader"><div class="spin"></div><div class="ltxt">LOADING...</div></div>
   <svg id="mapsvg"></svg>
-  <div id="hint">CLICK ANY STATE TO DRILL DOWN &nbsp;&middot;&nbsp; CLICK COUNTY FOR BUILDERS</div>
+  <div id="hint">CLICK STATE TO DRILL DOWN &nbsp;&middot;&nbsp; CLICK COUNTY FOR BUILDERS</div>
 </div>
 
 <!-- PANEL -->
 <div id="panel">
   <div id="ph">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <div id="ph-top">
       <div><div id="pstate"></div><div id="psub"></div></div>
       <button id="pcls" onclick="closePanel()">&#x2715;</button>
     </div>
@@ -279,7 +389,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
   <div id="blist"></div>
   <div id="pfoot">
-    <span>CORTEX &middot; LIVE</span>
+    <span id="pfoot-label">CORTEX &middot; LIVE</span>
     <button class="add-builder-btn" onclick="openAddBuilder()">+ ADD BUILDER</button>
   </div>
 </div>
@@ -287,87 +397,76 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 </div><!-- end body -->
 </div><!-- end app -->
 
+<!-- ADMIN MODAL -->
+<div id="admin-overlay" class="overlay">
+  <div class="modal" id="admin-modal">
+    <div class="modal-title">&#9881; TIER PARAMETERS</div>
+    <div class="tier-block t1">
+      <div class="tier-head" style="color:var(--t1)">&#9679; TIER 1 — TOP PRODUCERS</div>
+      <div class="tier-fields">
+        <div class="tier-field"><label>MIN RATING</label><input id="a-t1r" type="number" step="0.1" min="1" max="5" value="4.5"></div>
+        <div class="tier-field"><label>MIN REVIEWS</label><input id="a-t1rv" type="number" min="0" value="50"></div>
+        <div class="tier-field"><label>MIN YEARS</label><input id="a-t1y" type="number" min="0" value="10"></div>
+      </div>
+    </div>
+    <div class="tier-block t2">
+      <div class="tier-head" style="color:var(--t2)">&#9679; TIER 2 — MID-TIER</div>
+      <div class="tier-fields">
+        <div class="tier-field"><label>MIN RATING</label><input id="a-t2r" type="number" step="0.1" min="1" max="5" value="4.0"></div>
+        <div class="tier-field"><label>MIN REVIEWS</label><input id="a-t2rv" type="number" min="0" value="20"></div>
+        <div class="tier-field"><label>MIN YEARS</label><input id="a-t2y" type="number" min="0" value="5"></div>
+      </div>
+    </div>
+    <div class="tier-block t3">
+      <div class="tier-head" style="color:var(--t3)">&#9679; TIER 3 — PROSPECTS</div>
+      <div style="font-size:10px;color:var(--muted);">Everything below Tier 1 and Tier 2 thresholds.</div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div class="form-label" style="margin-bottom:6px">ADMIN PASSWORD</div>
+      <input id="admin-pass" type="password" class="form-input" style="width:100%" placeholder="Password...">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-cancel" onclick="closeAdmin()">CANCEL</button>
+      <button class="modal-btn modal-save" onclick="saveAdmin()">SAVE &amp; APPLY</button>
+    </div>
+  </div>
+</div>
+
 <!-- ADD BUILDER MODAL -->
-<div id="modal-overlay">
-  <div id="modal">
+<div id="modal-overlay" class="overlay">
+  <div class="modal" style="width:500px;">
     <div class="modal-title">+ ADD BUILDER</div>
     <div class="form-grid">
-      <div class="form-field full">
-        <div class="form-label">BUILDER TYPE</div>
+      <div class="form-field full"><div class="form-label">BUILDER TYPE</div>
         <select class="form-select" id="f-type">
-          <option value="validated">Validated (We work with them)</option>
-          <option value="prospects">Prospect (Not yet contacted)</option>
-          <option value="clientBrought">Client Brought (Client referral)</option>
+          <option value="validated">Validated</option>
+          <option value="prospects">Prospect</option>
+          <option value="clientBrought">Client Brought</option>
         </select>
       </div>
-      <div class="form-field">
-        <div class="form-label">COMPANY NAME *</div>
-        <input class="form-input" id="f-company" placeholder="ABC Builders"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">CONTACT NAME</div>
-        <input class="form-input" id="f-contact" placeholder="John Smith"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">EMAIL</div>
-        <input class="form-input" id="f-email" placeholder="john@builders.com"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">PHONE</div>
-        <input class="form-input" id="f-phone" placeholder="717-555-0100"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">WEBSITE</div>
-        <input class="form-input" id="f-website" placeholder="builders.com"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">SPECIALTY</div>
+      <div class="form-field"><div class="form-label">COMPANY NAME *</div><input class="form-input" id="f-company" placeholder="ABC Builders"/></div>
+      <div class="form-field"><div class="form-label">CONTACT NAME</div><input class="form-input" id="f-contact" placeholder="John Smith"/></div>
+      <div class="form-field"><div class="form-label">EMAIL</div><input class="form-input" id="f-email" placeholder="john@builders.com"/></div>
+      <div class="form-field"><div class="form-label">PHONE</div><input class="form-input" id="f-phone" placeholder="717-555-0100"/></div>
+      <div class="form-field"><div class="form-label">WEBSITE</div><input class="form-input" id="f-website" placeholder="builders.com"/></div>
+      <div class="form-field"><div class="form-label">SPECIALTY</div>
         <select class="form-select" id="f-specialty">
-          <option>Custom SFR</option>
-          <option>VA One-Time Close</option>
-          <option>FHA Construction</option>
-          <option>Conventional OTC</option>
-          <option>Luxury Custom</option>
-          <option>Spec Homes</option>
-          <option>Modular</option>
+          <option>Custom SFR</option><option>VA One-Time Close</option><option>FHA Construction</option>
+          <option>Conventional OTC</option><option>Luxury Custom</option><option>Spec Homes</option><option>Modular</option>
         </select>
       </div>
-      <div class="form-field">
-        <div class="form-label">STATE</div>
-        <input class="form-input" id="f-state" placeholder="PA" maxlength="2"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">CITY</div>
-        <input class="form-input" id="f-city" placeholder="Lebanon"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">GOOGLE RATING</div>
-        <input class="form-input" id="f-rating" type="number" step="0.1" min="1" max="5" placeholder="4.5"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">REVIEW COUNT</div>
-        <input class="form-input" id="f-reviews" type="number" placeholder="45"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">YEARS IN BUSINESS</div>
-        <input class="form-input" id="f-years" type="number" placeholder="10"/>
-      </div>
-      <div class="form-field">
-        <div class="form-label">BBB RATING</div>
+      <div class="form-field"><div class="form-label">STATE</div><input class="form-input" id="f-state" placeholder="PA" maxlength="2"/></div>
+      <div class="form-field"><div class="form-label">CITY</div><input class="form-input" id="f-city" placeholder="Lebanon"/></div>
+      <div class="form-field"><div class="form-label">GOOGLE RATING</div><input class="form-input" id="f-rating" type="number" step="0.1" min="1" max="5" placeholder="4.5"/></div>
+      <div class="form-field"><div class="form-label">REVIEW COUNT</div><input class="form-input" id="f-reviews" type="number" placeholder="45"/></div>
+      <div class="form-field"><div class="form-label">YEARS IN BUSINESS</div><input class="form-input" id="f-years" type="number" placeholder="10"/></div>
+      <div class="form-field"><div class="form-label">BBB RATING</div>
         <select class="form-select" id="f-bbb">
-          <option>A+</option><option>A</option><option>A-</option>
-          <option>B+</option><option>B</option><option>B-</option>
-          <option>C+</option><option>C</option><option>NR</option>
+          <option>A+</option><option>A</option><option>A-</option><option>B+</option><option>B</option><option>NR</option>
         </select>
       </div>
-      <div class="form-field">
-        <div class="form-label">VALIDATION DATE</div>
-        <input class="form-input" id="f-valdate" type="date"/>
-      </div>
-      <div class="form-field full">
-        <div class="form-label">NOTES</div>
-        <input class="form-input" id="f-notes" placeholder="Key notes about this builder..."/>
-      </div>
+      <div class="form-field"><div class="form-label">VALIDATION DATE</div><input class="form-input" id="f-valdate" type="date"/></div>
+      <div class="form-field full"><div class="form-label">NOTES</div><input class="form-input" id="f-notes" placeholder="Key notes..."/></div>
     </div>
     <div class="modal-actions">
       <button class="modal-btn modal-cancel" onclick="closeAddBuilder()">CANCEL</button>
@@ -377,65 +476,64 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 </div>
 
 <!-- EMAIL MODAL -->
-<div id="email-overlay" style="position:fixed;inset:0;background:#00000088;z-index:200;display:none;align-items:center;justify-content:center;">
-  <div style="background:#162840;border:1px solid #2e4a70;border-radius:8px;padding:20px;width:560px;max-height:85vh;overflow-y:auto;">
-    <div style="font-family:Syne,sans-serif;font-weight:800;font-size:16px;color:#00FFB3;margin-bottom:4px;letter-spacing:2px">&#9993; SEND EMAIL</div>
-    <div style="font-size:8px;color:#5a7898;letter-spacing:2px;margin-bottom:14px" id="email-builder-name"></div>
-    
-    <div style="margin-bottom:10px">
-      <div style="font-size:7px;letter-spacing:2px;color:#5a7898;margin-bottom:5px">TEMPLATE</div>
-      <select id="email-template" onchange="loadTemplate()" style="width:100%;background:#0d1828;border:1px solid #2e4a70;border-radius:3px;padding:7px;color:#e8eef8;font-family:Space Mono,monospace;font-size:9px;outline:none;">
-        <option value="">-- Select a template --</option>
-        <option value="validation_welcome">Validation Welcome</option>
-        <option value="checkin_60day">60-Day Check-In</option>
-        <option value="checkin_120day">120-Day Check-In</option>
-        <option value="build_progress">Build Progress Check</option>
-        <option value="photo_request">Photo/Drone Request</option>
-        <option value="partner_pitch">Partner Builder Pitch</option>
-      </select>
-    </div>
-
-    <div style="margin-bottom:10px">
-      <div style="font-size:7px;letter-spacing:2px;color:#5a7898;margin-bottom:5px">TO</div>
-      <input id="email-to" style="width:100%;background:#0d1828;border:1px solid #2e4a70;border-radius:3px;padding:7px;color:#e8eef8;font-family:Space Mono,monospace;font-size:9px;outline:none;" placeholder="builder@email.com"/>
-    </div>
-
-    <div style="margin-bottom:10px">
-      <div style="font-size:7px;letter-spacing:2px;color:#5a7898;margin-bottom:5px">SUBJECT</div>
-      <input id="email-subject" style="width:100%;background:#0d1828;border:1px solid #2e4a70;border-radius:3px;padding:7px;color:#e8eef8;font-family:Space Mono,monospace;font-size:9px;outline:none;" placeholder="Subject line..."/>
-    </div>
-
-    <div style="margin-bottom:14px">
-      <div style="font-size:7px;letter-spacing:2px;color:#5a7898;margin-bottom:5px">MESSAGE</div>
-      <textarea id="email-body" style="width:100%;height:200px;background:#0d1828;border:1px solid #2e4a70;border-radius:3px;padding:7px;color:#e8eef8;font-family:Space Mono,monospace;font-size:8px;outline:none;resize:vertical;line-height:1.6;" placeholder="Email body..."></textarea>
-    </div>
-
-    <div id="email-status" style="font-size:8px;color:#00FFB3;margin-bottom:10px;min-height:16px;letter-spacing:1px"></div>
-
-    <div style="display:flex;gap:8px;">
-      <button onclick="closeEmail()" style="flex:1;padding:8px;font-size:8px;letter-spacing:2px;border-radius:4px;cursor:pointer;font-family:Space Mono,monospace;background:none;border:1px solid #2e4a70;color:#5a7898;">CANCEL</button>
-      <button onclick="sendEmail()" style="flex:1;padding:8px;font-size:8px;letter-spacing:2px;border-radius:4px;cursor:pointer;font-family:Space Mono,monospace;font-weight:700;background:#00FFB3;border:none;color:#000;">SEND EMAIL</button>
+<div id="email-overlay" class="overlay">
+  <div class="modal" id="email-modal">
+    <div class="modal-title">&#9993; SEND EMAIL</div>
+    <div style="font-size:10px;color:var(--muted);letter-spacing:2px;margin-bottom:14px" id="email-builder-name"></div>
+    <div class="email-label">TEMPLATE</div>
+    <select id="email-template" onchange="loadTemplate()" class="form-select" style="width:100%;margin-bottom:10px">
+      <option value="">-- Select a template --</option>
+      <option value="validation_welcome">Validation Welcome</option>
+      <option value="checkin_60day">60-Day Check-In</option>
+      <option value="checkin_120day">120-Day Check-In</option>
+      <option value="build_progress">Build Progress Check</option>
+      <option value="photo_request">Photo/Drone Request</option>
+      <option value="partner_pitch">Partner Builder Pitch</option>
+    </select>
+    <div class="email-label">TO</div>
+    <input id="email-to" class="form-input" style="width:100%;margin-bottom:10px" placeholder="builder@email.com"/>
+    <div class="email-label">SUBJECT</div>
+    <input id="email-subject" class="form-input" style="width:100%;margin-bottom:10px" placeholder="Subject line..."/>
+    <div class="email-label">MESSAGE</div>
+    <textarea id="email-body" class="form-input" style="width:100%;height:180px;resize:vertical;line-height:1.6;margin-bottom:10px" placeholder="Email body..."></textarea>
+    <div id="email-status" style="font-size:10px;color:var(--green);margin-bottom:10px;min-height:18px;letter-spacing:1px"></div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-cancel" onclick="closeEmail()">CANCEL</button>
+      <button class="modal-btn modal-save" onclick="sendEmail()">SEND EMAIL</button>
     </div>
   </div>
 </div>
 
 <script>
 // ── STATE ──
-let viewMode='density', filt=0, selState=null, selBuilder=null;
-let drillLevel='nation'; // nation | state | county
-let currentState=null, currentCounty=null;
+let viewMode='density', filt=0, selBuilder=null;
+let drillLevel='nation', currentState=null;
 let proj, pg, topoStates, topoCounties;
 const scraped={}, scrapedCounty={}, B={}, countyB={}, aiCache={};
 let VB={validated:[],prospects:[],clientBrought:[]};
 let typeFilters={validated:true,prospects:true,clientBrought:true,scraped:true};
+let sidebarOpen=true;
 
-const T={1:{label:'Tier 1',color:'#00FFB3'},2:{label:'Tier 2',color:'#FFD234'},3:{label:'Tier 3',color:'#FF7A4A'}};
-const BTC={validated:'#00FFB3',prospects:'#FFD234',clientBrought:'#c084fc',scraped:'#5a7898'};
+const T={1:{label:'Tier 1',color:'#00ff88'},2:{label:'Tier 2',color:'#ffb800'},3:{label:'Tier 3',color:'#ff4444'}};
+const BTC={validated:'#00ff88',prospects:'#ffb800',clientBrought:'#aa44ff',scraped:'#555555'};
 const SID={"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"};
-// County FIPS to state
-function countyState(fips) { return SID[String(Math.floor(fips/1000)).padStart(2,'0')]; }
 
-async function loadVB(){try{const r=await fetch('/api/builders');VB=await r.json();updStats();if(topoStates)draw();}catch(e){}}
+// ── SIDEBAR ──
+function toggleSidebar(){
+  sidebarOpen=!sidebarOpen;
+  document.getElementById('sidebar').classList.toggle('collapsed',!sidebarOpen);
+  setTimeout(()=>{if(topoStates){if(drillLevel==='county')drawCounties();else draw();}},220);
+}
+function expandSidebar(){
+  sidebarOpen=true;
+  document.getElementById('sidebar').classList.remove('collapsed');
+  setTimeout(()=>{if(topoStates){if(drillLevel==='county')drawCounties();else draw();}},220);
+}
+
+// ── DATA ──
+async function loadVB(){
+  try{const r=await fetch('/api/builders');VB=await r.json();updStats();if(topoStates)draw();}catch(e){}
+}
 
 function allB(code){
   const sc=B[code]||[];
@@ -447,10 +545,23 @@ function allB(code){
 function stSt(code){const all=allB(code).filter(b=>typeVis(b));return{all,t1:all.filter(b=>b.tier===1).length,t2:all.filter(b=>b.tier===2).length,t3:all.filter(b=>b.tier===3).length,n:all.length};}
 function typeVis(b){return typeFilters[b.type||'scraped']!==false;}
 function aTier(r,rv,y){let s=0;if(r>=4.5)s+=3;else if(r>=4.0)s+=2;else s+=1;if(rv>=100)s+=3;else if(rv>=30)s+=2;else s+=1;if(y>=10)s+=2;else if(y>=5)s+=1;if(s>=7)return 1;if(s>=4)return 2;return 3;}
-function dColor(code){const s=stSt(code);if(!s.n)return'#1e3a58';const sc=s.all.reduce((a,b)=>a+(4-b.tier),0);return d3.interpolateRgb('#1e4a70','#00FFB3')(Math.pow(Math.min(sc/15,1),.5));}
-function sFill(code){const s=stSt(code);if(!s.n)return'#1e3a58';if(filt)return s.all.some(b=>b.tier===filt)?T[filt].color:'#182840';if(viewMode==='density')return dColor(code);const top=Math.min(...s.all.map(b=>b.tier));return T[top]?.color||'#182840';}
-function stars(r){let s='';for(let i=0;i<5;i++)s+=i<Math.floor(r)?'★':'☆';return s;}
-function rColor(r){return r>=4.5?'var(--t1)':r>=4.0?'var(--t2)':'var(--t3)';}
+
+function dColor(code){
+  const s=stSt(code);if(!s.n)return'#111';
+  const sc=s.all.reduce((a,b)=>a+(4-b.tier),0);
+  return d3.interpolateRgb('#1a2a1a','#00ff88')(Math.pow(Math.min(sc/15,1),.5));
+}
+function heatColor(code){
+  const s=stSt(code);if(!s.n)return'#111';
+  if(filt)return s.all.some(b=>b.tier===filt)?T[filt].color:'#1a1a1a';
+  if(s.t1>0)return T[1].color;if(s.t2>0)return T[2].color;if(s.t3>0)return T[3].color;return'#111';
+}
+function sFill(code){
+  if(viewMode==='heat')return heatColor(code);
+  const s=stSt(code);if(!s.n)return'#111';
+  if(filt)return s.all.some(b=>b.tier===filt)?T[filt].color:'#1a1a1a';
+  return dColor(code);
+}
 
 function updStats(){
   const all=[...Object.values(B).flat(),...Object.values(countyB).flat(),...VB.validated,...VB.prospects,...VB.clientBrought];
@@ -464,27 +575,33 @@ function updStats(){
 
 // ── DRAW NATION ──
 function draw(){
-  if(drillLevel==='county') return drawCounties();
+  if(drillLevel==='county')return drawCounties();
   const svg=d3.select('#mapsvg');svg.selectAll('*').remove();
   const W=document.getElementById('mapwrap').clientWidth,H=document.getElementById('mapwrap').clientHeight;
   proj=d3.geoAlbersUsa().fitExtent([[20,20],[W-20,H-20]],topoStates);
   pg=d3.geoPath().projection(proj);
-  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#dde8f5');
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#050505');
   const defs=svg.append('defs');
-  [1,2,3].forEach(t=>{const f=defs.append('filter').attr('id','gl'+t).attr('x','-40%').attr('y','-40%').attr('width','180%').attr('height','180%');f.append('feGaussianBlur').attr('stdDeviation','2').attr('result','blur');const m=f.append('feMerge');m.append('feMergeNode').attr('in','blur');m.append('feMergeNode').attr('in','SourceGraphic');});
+  [1,2,3].forEach(t=>{
+    const f=defs.append('filter').attr('id','gl'+t).attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+    f.append('feGaussianBlur').attr('stdDeviation','3').attr('result','blur');
+    const m=f.append('feMerge');m.append('feMergeNode').attr('in','blur');m.append('feMergeNode').attr('in','SourceGraphic');
+  });
   svg.selectAll('.st').data(topoStates.features).join('path').attr('class','st').attr('d',pg)
-    .attr('fill',d=>sFill(SID[String(d.id).padStart(2,'0')])).attr('fill-opacity',.85)
-    .attr('stroke','#1a3050').attr('stroke-width',.5).style('cursor','pointer')
-    .on('mouseenter',function(e,d){const c=SID[String(d.id).padStart(2,'0')];d3.select(this).attr('fill-opacity',1).attr('stroke','#fff').attr('stroke-width',1.5);showH(c);})
-    .on('mouseleave',function(){d3.select(this).attr('fill-opacity',.85).attr('stroke','#1a3050').attr('stroke-width',.5);hideH();})
-    .on('click',(e,d)=>{const c=SID[String(d.id).padStart(2,'0')];drillIntoState(c);});
+    .attr('fill',d=>sFill(SID[String(d.id).padStart(2,'0')])).attr('fill-opacity',.9)
+    .attr('stroke','#222').attr('stroke-width',.5).style('cursor','pointer')
+    .on('mouseenter',function(e,d){const c=SID[String(d.id).padStart(2,'0')];d3.select(this).attr('stroke','#00ff88').attr('stroke-width',1.5);showH(c);})
+    .on('mouseleave',function(){d3.select(this).attr('stroke','#222').attr('stroke-width',.5);hideH();})
+    .on('click',(e,d)=>{drillIntoState(SID[String(d.id).padStart(2,'0')]);});
   const valAll=[...VB.validated,...VB.prospects,...VB.clientBrought];
   [...valAll,...Object.values(B).flat()].forEach(b=>{
     if(!typeVis(b)||!b.lat||!b.lng)return;
     if(filt&&b.tier!==filt)return;
     const c=proj([b.lng,b.lat]);if(!c)return;
     const col=BTC[b.type||'scraped']||'#888';
-    svg.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',5).attr('fill',col).attr('fill-opacity',.9).attr('stroke','#0f1c2e').attr('stroke-width',1).style('filter',`url(#gl${b.tier||3})`).style('cursor','pointer').on('click',ev=>{ev.stopPropagation();drillIntoState(b.state,b);});
+    svg.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',6).attr('fill',col).attr('fill-opacity',.95)
+      .attr('stroke','#000').attr('stroke-width',1.5).style('filter',`url(#gl${b.tier||3})`).style('cursor','pointer')
+      .on('click',ev=>{ev.stopPropagation();drillIntoState(b.state,b);});
   });
 }
 
@@ -493,140 +610,116 @@ function drawCounties(){
   if(!topoCounties||!currentState)return;
   const svg=d3.select('#mapsvg');svg.selectAll('*').remove();
   const W=document.getElementById('mapwrap').clientWidth,H=document.getElementById('mapwrap').clientHeight;
-  // Filter counties for current state
   const stFips=Object.keys(SID).find(k=>SID[k]===currentState);
   const stateCounties={type:'FeatureCollection',features:topoCounties.features.filter(d=>String(d.id).padStart(5,'0').startsWith(stFips.padStart(2,'0')))};
   if(!stateCounties.features.length)return;
   proj=d3.geoAlbersUsa().fitExtent([[30,30],[W-30,H-30]],stateCounties);
   pg=d3.geoPath().projection(proj);
-  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#dde8f5');
+  svg.append('rect').attr('width',W).attr('height',H).attr('fill','#050505');
   const defs=svg.append('defs');
-  [1,2,3].forEach(t=>{const f=defs.append('filter').attr('id','gl'+t).attr('x','-40%').attr('y','-40%').attr('width','180%').attr('height','180%');f.append('feGaussianBlur').attr('stdDeviation','2').attr('result','blur');const m=f.append('feMerge');m.append('feMergeNode').attr('in','blur');m.append('feMergeNode').attr('in','SourceGraphic');});
-
+  [1,2,3].forEach(t=>{
+    const f=defs.append('filter').attr('id','gl'+t).attr('x','-50%').attr('y','-50%').attr('width','200%').attr('height','200%');
+    f.append('feGaussianBlur').attr('stdDeviation','3').attr('result','blur');
+    const m=f.append('feMerge');m.append('feMergeNode').attr('in','blur');m.append('feMergeNode').attr('in','SourceGraphic');
+  });
   svg.selectAll('.county').data(stateCounties.features).join('path').attr('class','county').attr('d',pg)
     .attr('fill',d=>{
-      const key=`${currentState}-${d.id}`;
-      const cb=countyB[key]||[];
-      if(!cb.length)return'#1e3a58';
+      const key=`${currentState}-${d.id}`;const cb=countyB[key]||[];
+      if(!cb.length)return'#111';
+      if(viewMode==='heat'){if(cb.some(b=>b.tier===1))return T[1].color;if(cb.some(b=>b.tier===2))return T[2].color;return T[3].color;}
       const score=cb.reduce((a,b)=>a+(4-b.tier),0);
-      return d3.interpolateRgb('#1e4a70','#00FFB3')(Math.pow(Math.min(score/10,1),.5));
+      return d3.interpolateRgb('#1a2a1a','#00ff88')(Math.pow(Math.min(score/10,1),.5));
     })
-    .attr('fill-opacity',.85).attr('stroke','#1e3a58').attr('stroke-width',.8).style('cursor','pointer')
+    .attr('fill-opacity',.9).attr('stroke','#222').attr('stroke-width',.8).style('cursor','pointer')
     .on('mouseenter',function(e,d){
-      d3.select(this).attr('fill-opacity',1).attr('stroke','#fff').attr('stroke-width',1.5);
+      d3.select(this).attr('stroke','#00ff88').attr('stroke-width',1.5);
       const name=d.properties&&d.properties.name?d.properties.name:'County';
       document.getElementById('hcs').textContent=name+' County';
-      const key=`${currentState}-${d.id}`;
-      const cb=countyB[key]||[];
-      document.getElementById('hcc').textContent=cb.length?cb.length+' builder'+(cb.length!==1?'s':'')+' found':'Click to scrape builders';
+      const key=`${currentState}-${d.id}`;const cb=countyB[key]||[];
+      document.getElementById('hcc').textContent=cb.length?cb.length+' builder'+(cb.length!==1?'s':'')+' found':'Click to scrape';
       document.getElementById('hcard').style.display='block';
     })
-    .on('mouseleave',function(){d3.select(this).attr('fill-opacity',.85).attr('stroke','#1e3a58').attr('stroke-width',.8);hideH();})
+    .on('mouseleave',function(){d3.select(this).attr('stroke','#222').attr('stroke-width',.8);hideH();})
     .on('click',(e,d)=>{
       const name=d.properties&&d.properties.name?d.properties.name:'County';
-      const centroid=pg.centroid(d);
-      const coords=proj.invert?proj.invert(centroid):null;
-      if(coords) scrapeCounty(d.id,name,coords[1],coords[0]);
+      const centroid=pg.centroid(d);const coords=proj.invert?proj.invert(centroid):null;
+      if(coords)scrapeCounty(d.id,name,coords[1],coords[0]);
     });
-
-  // Draw county labels
   stateCounties.features.forEach(d=>{
-    const c=pg.centroid(d);
-    if(!c||isNaN(c[0]))return;
-    const key=`${currentState}-${d.id}`;
-    const cb=countyB[key]||[];
+    const c=pg.centroid(d);if(!c||isNaN(c[0]))return;
+    const key=`${currentState}-${d.id}`;const cb=countyB[key]||[];
     if(cb.length>0){
       svg.append('text').attr('x',c[0]).attr('y',c[1]+4).attr('text-anchor','middle')
-        .attr('font-size','8px').attr('font-family','Space Mono,monospace')
-        .attr('fill','#fff').attr('fill-opacity',.8).attr('pointer-events','none')
-        .text(cb.length);
+        .attr('font-size','10px').attr('font-family','Space Mono,monospace')
+        .attr('fill','#fff').attr('fill-opacity',.9).attr('pointer-events','none').text(cb.length);
     }
   });
-
-  // Draw builder dots
   const allBuilds=[...VB.validated,...VB.prospects,...VB.clientBrought,...Object.values(countyB).flat()].filter(b=>b.state===currentState);
   allBuilds.forEach(b=>{
-    if(!b.lat||!b.lng)return;
-    const c=proj([b.lng,b.lat]);if(!c)return;
+    if(!b.lat||!b.lng)return;const c=proj([b.lng,b.lat]);if(!c)return;
     const col=BTC[b.type||'scraped']||'#888';
-    svg.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',5).attr('fill',col).attr('fill-opacity',.9).attr('stroke','#0f1c2e').attr('stroke-width',1).style('filter',`url(#gl${b.tier||3})`).style('cursor','pointer')
+    svg.append('circle').attr('cx',c[0]).attr('cy',c[1]).attr('r',6).attr('fill',col).attr('fill-opacity',.95)
+      .attr('stroke','#000').attr('stroke-width',1.5).style('filter',`url(#gl${b.tier||3})`).style('cursor','pointer')
       .on('click',ev=>{ev.stopPropagation();openBuilderFromMap(b);});
   });
-
   document.getElementById('hint').style.display='none';
 }
 
-// ── DRILL INTO STATE → COUNTY VIEW ──
-async function drillIntoState(code, builder){
-  currentState=code; drillLevel='county';
+async function drillIntoState(code,builder){
+  currentState=code;drillLevel='county';
   document.getElementById('bc-state').style.display='';
   document.getElementById('bc-state-name').textContent=code;
-  // Load counties topo if not loaded
   if(!topoCounties){
-    document.getElementById('loader').style.display='flex';
+    const ldr=document.getElementById('loader');ldr.classList.remove('hidden');ldr.style.display='flex';
     const data=await fetch('/counties-10m.json').then(r=>r.json());
     topoCounties=topojson.feature(data,data.objects.counties);
-    document.getElementById('loader').style.display='none';
+    ldr.classList.add('hidden');ldr.style.display='none';
   }
   drawCounties();
-  // Also open the panel with state-level builders
   if(!scraped[code]){
     scraped[code]=true;
     try{
-      const res=await fetch(`/api/scrape/${code}`);
-      const data=await res.json();
+      const res=await fetch(`/api/scrape/${code}`);const data=await res.json();
       if(data.results){
         let id=Object.values(B).flat().length+1000;
         B[code]=data.results.slice(0,20).map(p=>({id:'s'+(id++),type:'scraped',name:p.name,state:code,city:(p.vicinity||'').split(',')[0],lat:p.geometry.location.lat,lng:p.geometry.location.lng,googleRating:p.rating||0,reviewCount:p.user_ratings_total||0,yearsInBusiness:Math.floor(Math.random()*12)+3,specialty:'Custom SFR',bbbRating:p.rating>=4.5?'A+':p.rating>=4.0?'A':'B+',bbbAccredited:p.rating>=4.0,website:null,facebook:null,instagram:null,status:'Cold',lastContact:new Date().toISOString().split('T')[0],tier:aTier(p.rating||0,p.user_ratings_total||0,5)}));
-        updStats(); drawCounties();
+        updStats();drawCounties();
       }
     }catch(e){B[code]=[];}
   }
-  if(builder) selBuilder=builder;
+  if(builder)selBuilder=builder;
   renderPanel(code);
   document.getElementById('panel').classList.add('open');
 }
 
-// ── SCRAPE COUNTY ──
-async function scrapeCounty(fips, countyName, lat, lng){
-  const key=`${currentState}-${fips}`;
-  if(scrapedCounty[key])return;
-  scrapedCounty[key]=true;
-  // Show loading on panel
-  document.getElementById('psub').textContent=`SCRAPING ${countyName.toUpperCase()} COUNTY...`;
+async function scrapeCounty(fips,countyName,lat,lng){
+  const key=`${currentState}-${fips}`;if(scrapedCounty[key])return;scrapedCounty[key]=true;
+  document.getElementById('psub').textContent=`SCRAPING ${countyName.toUpperCase()}...`;
   try{
-    const res=await fetch(`/api/scrape-county/${lat}/${lng}/${encodeURIComponent(countyName)}/${currentState}`);
-    const data=await res.json();
+    const res=await fetch(`/api/scrape-county/${lat}/${lng}/${encodeURIComponent(countyName)}/${currentState}`);const data=await res.json();
     if(!data.results){countyB[key]=[];return;}
     let id=Object.values(countyB).flat().length+5000;
-    countyB[key]=data.results.slice(0,15).map(p=>({
-      id:'c'+(id++),type:'scraped',name:p.name,state:currentState,county:countyName,
-      city:(p.vicinity||'').split(',')[0],lat:p.geometry.location.lat,lng:p.geometry.location.lng,
-      googleRating:p.rating||0,reviewCount:p.user_ratings_total||0,
-      yearsInBusiness:Math.floor(Math.random()*12)+3,specialty:'Custom SFR',
-      bbbRating:p.rating>=4.5?'A+':p.rating>=4.0?'A':'B+',bbbAccredited:p.rating>=4.0,
-      website:null,facebook:null,instagram:null,status:'Cold',
-      lastContact:new Date().toISOString().split('T')[0],
-      tier:aTier(p.rating||0,p.user_ratings_total||0,5)
-    }));
-    updStats(); drawCounties(); renderPanel(currentState);
+    countyB[key]=data.results.slice(0,15).map(p=>({id:'c'+(id++),type:'scraped',name:p.name,state:currentState,county:countyName,city:(p.vicinity||'').split(',')[0],lat:p.geometry.location.lat,lng:p.geometry.location.lng,googleRating:p.rating||0,reviewCount:p.user_ratings_total||0,yearsInBusiness:Math.floor(Math.random()*12)+3,specialty:'Custom SFR',bbbRating:p.rating>=4.5?'A+':p.rating>=4.0?'A':'B+',bbbAccredited:p.rating>=4.0,website:null,facebook:null,instagram:null,status:'Cold',lastContact:new Date().toISOString().split('T')[0],tier:aTier(p.rating||0,p.user_ratings_total||0,5)}));
+    updStats();drawCounties();renderPanel(currentState);
   }catch(e){countyB[key]=[];}
 }
 
-function openBuilderFromMap(b){
-  selBuilder=b;
-  document.getElementById('panel').classList.add('open');
-  renderPanel(currentState);
-}
+function openBuilderFromMap(b){selBuilder=b;document.getElementById('panel').classList.add('open');renderPanel(currentState);}
 
-// ── HOVER ──
-function showH(c){const s=stSt(c);document.getElementById('hcs').textContent=c;document.getElementById('hcc').textContent=s.n+' builder'+(s.n!==1?'s':'')+' tracked';const t=document.getElementById('hct');t.innerHTML='';if(s.t1)t.innerHTML+=`<div class="hc-r" style="color:var(--t1)">&#9679; ${s.t1} Tier 1</div>`;if(s.t2)t.innerHTML+=`<div class="hc-r" style="color:var(--t2)">&#9679; ${s.t2} Tier 2</div>`;if(s.t3)t.innerHTML+=`<div class="hc-r" style="color:var(--t3)">&#9679; ${s.t3} Tier 3</div>`;document.getElementById('hcard').style.display='block';}
+function showH(c){
+  const s=stSt(c);
+  document.getElementById('hcs').textContent=c;
+  document.getElementById('hcc').textContent=s.n+' builder'+(s.n!==1?'s':'')+' tracked';
+  const t=document.getElementById('hct');t.innerHTML='';
+  if(s.t1)t.innerHTML+=`<div class="hc-r" style="color:var(--t1)">&#9679; ${s.t1} Tier 1</div>`;
+  if(s.t2)t.innerHTML+=`<div class="hc-r" style="color:var(--t2)">&#9679; ${s.t2} Tier 2</div>`;
+  if(s.t3)t.innerHTML+=`<div class="hc-r" style="color:var(--t3)">&#9679; ${s.t3} Tier 3</div>`;
+  document.getElementById('hcard').style.display='block';
+}
 function hideH(){document.getElementById('hcard').style.display='none';}
 
-// ── PANEL ──
 function renderPanel(code){
-  const all=allB(code).filter(b=>typeVis(b));
-  const fl=filt?all.filter(b=>b.tier===filt):all;
+  const all=allB(code).filter(b=>typeVis(b));const fl=filt?all.filter(b=>b.tier===filt):all;
   const t1=all.filter(b=>b.tier===1).length,t2=all.filter(b=>b.tier===2).length,t3=all.filter(b=>b.tier===3).length;
   document.getElementById('pstate').textContent=drillLevel==='county'?`${code} COUNTIES`:code;
   document.getElementById('psub').textContent=fl.length+' BUILDER'+(fl.length!==1?'S':'')+(filt?` · TIER ${filt}`:' · ALL TIERS');
@@ -636,215 +729,177 @@ function renderPanel(code){
 
 function renderList(bl){
   const el=document.getElementById('blist');
-  if(!bl.length){el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:10px;padding-top:30px">No builders yet'+(drillLevel==='county'?'<br><span style="font-size:8px;color:var(--dim)">Click a county to scrape builders</span>':'')+'</div>';return;}
+  if(!bl.length){el.innerHTML='<div style="text-align:center;color:var(--muted);font-size:12px;padding-top:40px">No builders yet'+(drillLevel==='county'?'<br><span style="font-size:10px;color:var(--dim)">Click a county to scrape</span>':'')+'</div>';return;}
   el.innerHTML=bl.map(b=>{
     const bt=b.type||'scraped';const tc=BTC[bt];const tier=T[b.tier]||{label:'?',color:'#888'};
     const op=selBuilder&&String(selBuilder.id)===String(b.id);
-    return`<div class="bc ${op?'op':''}" onclick="togB('${b.id}')"><div class="bh"><div class="bnr"><div class="bdot" style="background:${tc};box-shadow:0 0 5px ${tc}"></div><div class="bn">${b.name||b.companyName}</div><div class="btb" style="background:${tier.color}18;color:${tier.color}">${tier.label}</div><div class="btype" style="background:${tc}18;color:${tc}">${bt.slice(0,3).toUpperCase()}</div></div><div class="bm">${b.county?b.county+' Co · ':''} ${b.city||''} · ${b.specialty||'Builder'} · ${b.yearsInBusiness||'?'}yr</div></div>${op?expandCard(b):''}</div>`;
+    return`<div class="bc ${op?'op':''}" onclick="togB('${b.id}')"><div class="bh"><div class="bnr"><div class="bdot" style="background:${tc};box-shadow:0 0 6px ${tc}88"></div><div class="bn">${b.name||b.companyName}</div><div class="btb" style="background:${tier.color}20;color:${tier.color}">${tier.label}</div><div class="btype" style="background:${tc}15;color:${tc}">${bt.slice(0,3).toUpperCase()}</div></div><div class="bm">${b.county?b.county+' Co · ':''} ${b.city||''} · ${b.specialty||'Builder'} · ${b.yearsInBusiness||'?'}yr</div></div>${op?expandCard(b):''}</div>`;
   }).join('');
   if(selBuilder)triggerAI(selBuilder);
 }
 
 function expandCard(b){
   const bt=b.type||'scraped';const tc=BTC[bt];const cached=aiCache[b.id];
-  const links=[b.website?`<a class="lbtn" href="https://${b.website}" target="_blank" style="background:#5585ff12;border-color:#5585ff30;color:var(--blue)">&#127760; WEB</a>`:'',b.facebook?`<a class="lbtn" href="https://facebook.com/${b.facebook}" target="_blank" style="background:#1877f212;border-color:#1877f230;color:#5b9bd5">FB</a>`:'',b.instagram?`<a class="lbtn" href="https://instagram.com/${b.instagram}" target="_blank" style="background:#e1306c12;border-color:#e1306c30;color:#e1306c">IG</a>`:'','',b.phone?`<a class="lbtn" href="tel:${b.phone}" style="background:#FFD23412;border-color:#FFD23430;color:var(--t2)">&#128222; CALL</a>`:''].filter(Boolean).join('');
-  return`<div class="bd"><div class="bdiv"></div>${b.type==='validated'?`<div style="background:var(--t1)18;border:1px solid var(--t1)30;border-radius:4px;padding:6px 9px;margin-bottom:9px;display:flex;justify-content:space-between"><span style="font-size:7px;color:var(--t1);letter-spacing:2px">&#10003; VALIDATED</span><span style="font-size:7px;color:var(--muted)">${b.validatedDate||''}</span></div>`:''}${b.type==='clientBrought'?`<div style="background:#c084fc18;border:1px solid #c084fc30;border-radius:4px;padding:6px 9px;margin-bottom:9px"><span style="font-size:7px;color:#c084fc;letter-spacing:2px">&#9733; CLIENT BROUGHT</span></div>`:''}<div class="ai-sec"><div class="ai-hdr"><div class="ai-ico" style="background:#5585ff20;color:var(--blue)">&#9881;</div><div class="ai-lbl" style="color:var(--blue)">BUSINESS NEEDS &middot; AI</div></div><div id="ai-needs-${b.id}">${cached?renderAI(cached.needs):'<div class="ai-load"><div class="ai-sp"></div><div class="ai-lt">ANALYZING...</div></div>'}</div></div><div class="ai-sec"><div class="ai-hdr"><div class="ai-ico" style="background:#00FFB320;color:var(--t1)">&#9654;</div><div class="ai-lbl" style="color:var(--t1)">CMM PITCH &middot; AI</div></div><div id="ai-pitch-${b.id}">${cached?renderAI(cached.pitch):'<div class="ai-load"><div class="ai-sp"></div><div class="ai-lt">GENERATING...</div></div>'}</div></div><div class="sec-lbl" style="margin-bottom:6px">REPUTATION</div><div class="rat-row"><div class="rat-box"><div class="rat-src">GOOGLE</div><div class="rat-val" style="color:${rColor(b.googleRating||0)}">${b.googleRating||'—'}</div><div style="font-size:7px;color:${rColor(b.googleRating||0)}">${b.googleRating?stars(b.googleRating):''}</div><div style="font-size:6px;color:var(--muted);margin-top:2px">${b.reviewCount||0} reviews</div></div><div class="rat-box"><div class="rat-src">BBB</div><div class="rat-val" style="color:${b.bbbRating&&b.bbbRating.startsWith('A')?'var(--t1)':'var(--t2)'}">${b.bbbRating||'NR'}</div><div style="font-size:7px;margin-top:3px;color:${b.bbbAccredited?'var(--t1)':'var(--muted)'}">${b.bbbAccredited?'&#10003; ACCRED':'—'}</div></div><div class="rat-box"><div class="rat-src">YEARS</div><div class="rat-val" style="color:var(--blue)">${b.yearsInBusiness||'?'}</div></div></div>${links?`<div class="sec-lbl" style="margin-bottom:5px">PRESENCE</div><div class="links-row">${links}</div>`:''} ${b.contactName||b.email?`<div class="vfield-grid">${b.contactName?`<div class="vfield"><div class="vfl">CONTACT</div><div class="vfv">${b.contactName}</div></div>`:''} ${b.phone?`<div class="vfield"><div class="vfl">PHONE</div><div class="vfv">${b.phone}</div></div>`:''} ${b.validatedDate?`<div class="vfield"><div class="vfl">VALIDATED</div><div class="vfv">${b.validatedDate}</div></div>`:''} ${b.lastChecked?`<div class="vfield"><div class="vfl">LAST CHECKED</div><div class="vfv">${b.lastChecked}</div></div>`:''}</div>`:''} ${b.notes?`<div style="background:var(--bg4);border:1px solid var(--border);border-radius:4px;padding:7px 9px;margin-bottom:8px;font-size:8px;color:var(--muted);line-height:1.6">${b.notes}</div>`:''}<div class="sgrid"><div class="sf"><div class="sfl">SPECIALTY</div><div class="sfv" style="color:var(--blue);font-size:8px">${b.specialty||'—'}</div></div><div class="sf"><div class="sfl">STATUS</div><div class="sfv" style="color:var(--t1)">${b.status||b.type||'—'}</div></div></div><div class="bacts">
-      <button class="bbtn bg" onclick="markChecked('${b.id}')">&#10003; MARK CHECKED</button>
-      <button class="bbtn bb" onclick="openEmail('${b.id}')">&#9993; EMAIL</button>
-    </div>
-    <div id="comms-${b.id}" style="margin-top:6px"></div>
-    </div>`;
+  const links=[b.website?`<a class="lbtn" href="https://${b.website}" target="_blank" style="background:#4488ff12;border-color:#4488ff40;color:var(--blue)">&#127760; WEB</a>`:'',b.facebook?`<a class="lbtn" href="https://facebook.com/${b.facebook}" target="_blank" style="background:#1877f212;border-color:#1877f230;color:#5b9bd5">FB</a>`:'',b.instagram?`<a class="lbtn" href="https://instagram.com/${b.instagram}" target="_blank" style="background:#e1306c12;border-color:#e1306c30;color:#e1306c">IG</a>`:'',b.phone?`<a class="lbtn" href="tel:${b.phone}" style="background:#ffb80012;border-color:#ffb80040;color:var(--t2)">&#128222; CALL</a>`:''].filter(Boolean).join('');
+  const stars=r=>{let s='';for(let i=0;i<5;i++)s+=i<Math.floor(r)?'★':'☆';return s;};
+  const rColor=r=>r>=4.5?'var(--t1)':r>=4.0?'var(--t2)':'var(--t3)';
+  return`<div class="bd"><div class="bdiv"></div>${b.type==='validated'?`<div style="background:#00ff8810;border:1px solid #00ff8830;border-radius:4px;padding:8px 10px;margin-bottom:10px;display:flex;justify-content:space-between"><span style="font-size:10px;color:var(--t1);letter-spacing:2px">&#10003; VALIDATED</span><span style="font-size:10px;color:var(--muted)">${b.validatedDate||''}</span></div>`:''}${b.type==='clientBrought'?`<div style="background:#aa44ff10;border:1px solid #aa44ff30;border-radius:4px;padding:8px 10px;margin-bottom:10px"><span style="font-size:10px;color:var(--cli);letter-spacing:2px">&#9733; CLIENT BROUGHT</span></div>`:''}<div class="ai-sec"><div class="ai-hdr"><div class="ai-ico" style="background:#4488ff20;color:var(--blue)">&#9881;</div><div class="ai-lbl" style="color:var(--blue)">BUSINESS NEEDS · AI</div></div><div id="ai-needs-${b.id}">${cached?renderAI(cached.needs):'<div class="ai-load"><div class="ai-sp"></div><div class="ai-lt">ANALYZING...</div></div>'}</div></div><div class="ai-sec"><div class="ai-hdr"><div class="ai-ico" style="background:#00ff8820;color:var(--green)">&#9654;</div><div class="ai-lbl" style="color:var(--green)">CMM PITCH · AI</div></div><div id="ai-pitch-${b.id}">${cached?renderAI(cached.pitch):'<div class="ai-load"><div class="ai-sp"></div><div class="ai-lt">GENERATING...</div></div>'}</div></div><div class="sec-lbl" style="margin-bottom:8px">REPUTATION</div><div class="rat-row"><div class="rat-box"><div class="rat-src">GOOGLE</div><div class="rat-val" style="color:${rColor(b.googleRating||0)}">${b.googleRating||'—'}</div><div style="font-size:10px;color:${rColor(b.googleRating||0)}">${b.googleRating?stars(b.googleRating):''}</div><div style="font-size:9px;color:var(--muted);margin-top:2px">${b.reviewCount||0} reviews</div></div><div class="rat-box"><div class="rat-src">BBB</div><div class="rat-val" style="color:${b.bbbRating&&b.bbbRating.startsWith('A')?'var(--t1)':'var(--t2)'}">${b.bbbRating||'NR'}</div><div style="font-size:10px;margin-top:3px;color:${b.bbbAccredited?'var(--t1)':'var(--muted)'}">${b.bbbAccredited?'✓ ACCRED':'—'}</div></div><div class="rat-box"><div class="rat-src">YEARS</div><div class="rat-val" style="color:var(--blue)">${b.yearsInBusiness||'?'}</div></div></div>${links?`<div class="sec-lbl" style="margin-bottom:6px">PRESENCE</div><div class="links-row">${links}</div>`:''} ${b.contactName||b.phone?`<div class="vfield-grid">${b.contactName?`<div class="vfield"><div class="vfl">CONTACT</div><div class="vfv">${b.contactName}</div></div>`:''} ${b.phone?`<div class="vfield"><div class="vfl">PHONE</div><div class="vfv">${b.phone}</div></div>`:''} ${b.validatedDate?`<div class="vfield"><div class="vfl">VALIDATED</div><div class="vfv">${b.validatedDate}</div></div>`:''} ${b.lastChecked?`<div class="vfield"><div class="vfl">LAST CHECKED</div><div class="vfv">${b.lastChecked}</div></div>`:''}</div>`:''} ${b.notes?`<div style="background:var(--black4);border:1px solid var(--border);border-radius:4px;padding:9px 11px;margin-bottom:10px;font-size:10px;color:var(--muted);line-height:1.6">${b.notes}</div>`:''}<div class="sgrid"><div class="sf"><div class="sfl">SPECIALTY</div><div class="sfv" style="color:var(--blue)">${b.specialty||'—'}</div></div><div class="sf"><div class="sfl">STATUS</div><div class="sfv" style="color:var(--green)">${b.status||b.type||'—'}</div></div></div><div class="bacts"><button class="bbtn bg" onclick="markChecked('${b.id}')">✓ MARK CHECKED</button><button class="bbtn bb" onclick="openEmail('${b.id}')">✉ EMAIL</button></div></div>`;
 }
 
-function renderAI(items){if(!items||!items.length)return'<div class="ai-load"><div class="ai-lt" style="color:var(--t3)">UNAVAILABLE</div></div>';return`<div class="ai-box">${items.map((t,i)=>`<div class="ai-item"><div class="ai-n">0${i+1}</div><div class="ai-t">${t}</div></div>`).join('')}</div>`;}
+function renderAI(items){
+  if(!items||!items.length)return'<div class="ai-load"><div class="ai-lt" style="color:var(--t3)">UNAVAILABLE</div></div>';
+  return`<div class="ai-box">${items.map((t,i)=>`<div class="ai-item"><div class="ai-n">0${i+1}</div><div class="ai-t">${t}</div></div>`).join('')}</div>`;
+}
 
 async function triggerAI(b){
   if(aiCache[b.id])return;
-  const prompt=`You are an analyst for Clear Modern Mortgage specializing in VA, FHA, and Conventional One-Time Close construction loans.
-
-Builder: ${b.name||b.companyName}
-Location: ${b.city||''}${b.county?', '+b.county+' County':''}, ${b.state||''}
-Specialty: ${b.specialty||'Custom SFR'}
-Years: ${b.yearsInBusiness||'unknown'}
-Google: ${b.googleRating||0}/5 (${b.reviewCount||0} reviews)
-BBB: ${b.bbbRating||'NR'}${b.bbbAccredited?' Accredited':''}
-Type: ${b.type==='validated'?'Existing CMM partner':b.type==='clientBrought'?'Client referral':'Prospect'}
-
-Respond ONLY with valid JSON:
-{"needs":["need1","need2","need3"],"pitch":["pitch1","pitch2","pitch3"]}
-
-needs=3 specific business pain points this builder faces RIGHT NOW.
-pitch=3 specific reasons Clear Modern Mortgage solves their problems.`;
+  const prompt=`You are an analyst for Clear Modern Mortgage specializing in VA, FHA, and Conventional One-Time Close construction loans.\n\nBuilder: ${b.name||b.companyName}\nLocation: ${b.city||''}${b.county?', '+b.county+' County':''}, ${b.state||''}\nSpecialty: ${b.specialty||'Custom SFR'}\nYears: ${b.yearsInBusiness||'unknown'}\nGoogle: ${b.googleRating||0}/5 (${b.reviewCount||0} reviews)\nBBB: ${b.bbbRating||'NR'}${b.bbbAccredited?' Accredited':''}\nType: ${b.type==='validated'?'Existing CMM partner':b.type==='clientBrought'?'Client referral':'Prospect'}\n\nRespond ONLY with valid JSON:\n{"needs":["need1","need2","need3"],"pitch":["pitch1","pitch2","pitch3"]}`;
   try{
     const res=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     const data=await res.json();
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
-    const parsed=JSON.parse(text);
-    aiCache[b.id]=parsed;
-    const ne=document.getElementById('ai-needs-'+b.id);
-    const pe=document.getElementById('ai-pitch-'+b.id);
-    if(ne)ne.innerHTML=renderAI(parsed.needs);
-    if(pe)pe.innerHTML=renderAI(parsed.pitch);
+    const parsed=JSON.parse(text);aiCache[b.id]=parsed;
+    const ne=document.getElementById('ai-needs-'+b.id);const pe=document.getElementById('ai-pitch-'+b.id);
+    if(ne)ne.innerHTML=renderAI(parsed.needs);if(pe)pe.innerHTML=renderAI(parsed.pitch);
   }catch(err){['ai-needs-','ai-pitch-'].forEach(p=>{const el=document.getElementById(p+b.id);if(el)el.innerHTML='<div class="ai-load"><div class="ai-lt">AI UNAVAILABLE</div></div>';});}
 }
 
 function togB(id){
-  const all=allB(currentState).filter(b=>typeVis(b));
-  const fl=filt?all.filter(b=>b.tier===filt):all;
+  const all=allB(currentState).filter(b=>typeVis(b));const fl=filt?all.filter(b=>b.tier===filt):all;
   const b=fl.find(x=>String(x.id)===String(id));
-  selBuilder=(selBuilder&&String(selBuilder.id)===String(id))?null:b;
-  renderList(fl);
+  selBuilder=(selBuilder&&String(selBuilder.id)===String(id))?null:b;renderList(fl);
 }
 
-function closePanel(){selState=null;selBuilder=null;document.getElementById('panel').classList.remove('open');document.getElementById('hint').style.display='block';}
+function closePanel(){selBuilder=null;document.getElementById('panel').classList.remove('open');document.getElementById('hint').style.display='block';}
 
-async function markChecked(id){await fetch(`/api/builders/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({lastChecked:new Date().toISOString().split('T')[0]})});await loadVB();if(currentState)renderPanel(currentState);}
-function copyContact(id){const all=[...VB.validated,...VB.prospects,...VB.clientBrought];const b=all.find(x=>x.id===id);if(!b)return;navigator.clipboard.writeText(`${b.companyName||b.name}
-${b.contactName||''}
-${b.email||''}
-${b.phone||''}
-${b.website||''}`).then(()=>alert('Copied!'));}
+async function markChecked(id){
+  await fetch(`/api/builders/${id}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({lastChecked:new Date().toISOString().split('T')[0]})});
+  await loadVB();if(currentState)renderPanel(currentState);
+}
+
+// ── CONTROLS ──
+function setMode(m){
+  viewMode=m;
+  document.getElementById('bdn').classList.toggle('on',m==='density');
+  document.getElementById('bht').classList.toggle('on',m==='heat');
+  draw();if(currentState)renderPanel(currentState);
+}
+function setFilter(t){filt=t;draw();if(currentState)renderPanel(currentState);}
+function toggleType(type){typeFilters[type]=!typeFilters[type];draw();if(currentState)renderPanel(currentState);}
+
+// ── ADMIN ──
+function openAdmin(){document.getElementById('admin-overlay').classList.add('open');}
+function closeAdmin(){document.getElementById('admin-overlay').classList.remove('open');}
+async function saveAdmin(){
+  const pass=document.getElementById('admin-pass').value;if(!pass){alert('Password required');return;}
+  const params={
+    tier1:{minRating:parseFloat(document.getElementById('a-t1r').value),minReviews:parseInt(document.getElementById('a-t1rv').value),minYears:parseInt(document.getElementById('a-t1y').value)},
+    tier2:{minRating:parseFloat(document.getElementById('a-t2r').value),minReviews:parseInt(document.getElementById('a-t2rv').value),minYears:parseInt(document.getElementById('a-t2y').value)}
+  };
+  try{
+    const res=await fetch('/api/admin/tiers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pass,params})});
+    const data=await res.json();
+    if(data.error){alert('Error: '+data.error);return;}
+    closeAdmin();document.getElementById('admin-pass').value='';draw();alert('Tier parameters updated.');
+  }catch(e){alert('Failed to save');}
+}
 
 // ── SEARCH ──
-function updatePlaceholder(){const t=document.getElementById('search-type').value;const ph={zip:'Enter ZIP code...',city:'Enter city name...',county:'Enter county, ST...',state:'Enter state (e.g. PA)',radius:'City, ST, radius mi'};document.getElementById('search-input').placeholder=ph[t]||'Search...';}
-
 async function doSearch(){
   const type=document.getElementById('search-type').value;
   const val=document.getElementById('search-input').value.trim();
   if(!val)return;
-  if(type==='state'){
+  if(type==='state'||val.length===2){
     const code=val.toUpperCase().slice(0,2);
     if(Object.values(SID).includes(code)){drillIntoState(code);return;}
   }
-  // Geocode using Google
   try{
     const res=await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(val)}&key=${GKEY}`);
     const data=await res.json();
     if(data.results&&data.results[0]){
-      const loc=data.results[0].geometry.location;
-      const comps=data.results[0].address_components;
-      const stComp=comps.find(c=>c.types.includes('administrative_area_level_1'));
-      const stCode=stComp?stComp.short_name:null;
+      const loc=data.results[0].geometry.location;const comps=data.results[0].address_components;
+      const stComp=comps.find(c=>c.types.includes('administrative_area_level_1'));const stCode=stComp?stComp.short_name:null;
       if(stCode){
         await drillIntoState(stCode);
-        // Scrape around the geocoded point
         const countyComp=comps.find(c=>c.types.includes('administrative_area_level_2'));
         const countyName=countyComp?countyComp.long_name.replace(' County',''):'Area';
-        const radius=type==='radius'?parseInt(val.split(' ').pop())*1609||40000:40000;
-        document.getElementById('psub').textContent=`SCRAPING ${val.toUpperCase()}...`;
         const sr=await fetch(`/api/scrape-county/${loc.lat}/${loc.lng}/${encodeURIComponent(countyName)}/${stCode}`);
         const sd=await sr.json();
         if(sd.results){
-          const key=`${stCode}-search-${Date.now()}`;
-          let id=Object.values(countyB).flat().length+8000;
+          const key=`${stCode}-search-${Date.now()}`;let id=Object.values(countyB).flat().length+8000;
           countyB[key]=sd.results.slice(0,20).map(p=>({id:'cs'+(id++),type:'scraped',name:p.name,state:stCode,county:countyName,city:(p.vicinity||'').split(',')[0],lat:p.geometry.location.lat,lng:p.geometry.location.lng,googleRating:p.rating||0,reviewCount:p.user_ratings_total||0,yearsInBusiness:5,specialty:'Custom SFR',bbbRating:p.rating>=4.5?'A+':'B+',bbbAccredited:p.rating>=4.0,website:null,facebook:null,instagram:null,status:'Cold',lastContact:new Date().toISOString().split('T')[0],tier:aTier(p.rating||0,p.user_ratings_total||0,5)}));
           updStats();drawCounties();renderPanel(stCode);
         }
       }
     }
-  }catch(e){alert('Search error. Try state code (e.g. PA) for now.');}
+  }catch(e){alert('Search error. Try a 2-letter state code.');}
 }
 
 // ── DRILL UP ──
 function drillUp(level){
-  if(level==='nation'){
-    drillLevel='nation';currentState=null;currentCounty=null;
-    document.getElementById('bc-state').style.display='none';
-    closePanel();draw();
-  } else if(level==='state'){
-    drawCounties();renderPanel(currentState);
-  }
+  if(level==='nation'){drillLevel='nation';currentState=null;document.getElementById('bc-state').style.display='none';closePanel();draw();}
+  else if(level==='state'){drawCounties();renderPanel(currentState);}
 }
 
-// ── CONTROLS ──
-function setMode(m){viewMode=m;document.getElementById('bdn').classList.toggle('on',m==='density');document.getElementById('bht').classList.toggle('on',m==='heat');draw();if(currentState)renderPanel(currentState);}
-function setFilter(t){filt=t;['bal','bt1','bt2','bt3'].forEach(id=>{document.getElementById(id).className='ctrl';});const a=document.getElementById(t===0?'bal':'bt'+t);a.classList.add('on');if(t===0)a.classList.add('ca');if(t===2)a.classList.add('c2');if(t===3)a.classList.add('c3');draw();if(currentState)renderPanel(currentState);}
-function toggleType(type){typeFilters[type]=!typeFilters[type];const idMap={validated:'tf-val',prospects:'tf-pro',clientBrought:'tf-cli',scraped:'tf-scr'};document.getElementById(idMap[type]).classList.toggle('on',typeFilters[type]);draw();if(currentState)renderPanel(currentState);}
-function toggleAdmin(){const pass=prompt('Admin password:');if(!pass)return;if(pass!=='cmm2024'){alert('Incorrect');return;}const t1r=prompt('Tier 1 min rating:','4.5');const t1rv=prompt('Tier 1 min reviews:','50');const t1y=prompt('Tier 1 min years:','10');const t2r=prompt('Tier 2 min rating:','4.0');const t2rv=prompt('Tier 2 min reviews:','20');const t2y=prompt('Tier 2 min years:','5');fetch('/api/admin/tiers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pass,params:{tier1:{minRating:parseFloat(t1r),minReviews:parseInt(t1rv),minYears:parseInt(t1y)},tier2:{minRating:parseFloat(t2r),minReviews:parseInt(t2rv),minYears:parseInt(t2y)}}})}).then(()=>alert('Tier params updated'));}
+// ── EMAIL ──
+let emailBuilderId=null;
+function openEmail(id){
+  emailBuilderId=id;
+  const all=[...VB.validated,...VB.prospects,...VB.clientBrought];const b=all.find(x=>x.id===id);
+  document.getElementById('email-overlay').classList.add('open');
+  document.getElementById('email-builder-name').textContent=b?(b.companyName||b.name):'';
+  document.getElementById('email-to').value=b&&b.email?b.email:'';
+  document.getElementById('email-subject').value='';document.getElementById('email-body').value='';
+  document.getElementById('email-template').value='';document.getElementById('email-status').textContent='';
+}
+function closeEmail(){document.getElementById('email-overlay').classList.remove('open');emailBuilderId=null;}
+async function loadTemplate(){
+  const key=document.getElementById('email-template').value;if(!key||!emailBuilderId)return;
+  try{
+    const res=await fetch(`/api/templates/${key}/${emailBuilderId}`);const data=await res.json();
+    document.getElementById('email-subject').value=data.subject||'';
+    document.getElementById('email-body').value=data.body||'';
+    if(data.to)document.getElementById('email-to').value=data.to;
+  }catch(e){}
+}
+async function sendEmail(){
+  const to=document.getElementById('email-to').value.trim();
+  const subject=document.getElementById('email-subject').value.trim();
+  const body=document.getElementById('email-body').value.trim();
+  const templateKey=document.getElementById('email-template').value;
+  const statusEl=document.getElementById('email-status');
+  if(!to){statusEl.style.color='var(--t3)';statusEl.textContent='ERROR: No recipient email';return;}
+  if(!subject){statusEl.style.color='var(--t3)';statusEl.textContent='ERROR: No subject';return;}
+  statusEl.style.color='var(--muted)';statusEl.textContent='SENDING...';
+  try{
+    const res=await fetch('/api/send-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({builderId:emailBuilderId,templateKey,customSubject:subject,customBody:body,toEmail:to})});
+    const data=await res.json();
+    if(data.success){statusEl.style.color='var(--green)';statusEl.textContent='✓ EMAIL SENT';await loadVB();setTimeout(closeEmail,1800);}
+    else{statusEl.style.color='var(--t3)';statusEl.textContent='ERROR: '+(data.error||'Unknown error');}
+  }catch(e){statusEl.style.color='var(--t3)';statusEl.textContent='ERROR: '+e.message;}
+}
+
+// ── ADD BUILDER ──
 function openAddBuilder(){document.getElementById('modal-overlay').classList.add('open');}
 function closeAddBuilder(){document.getElementById('modal-overlay').classList.remove('open');}
-async function saveBuilder(){const b={type:document.getElementById('f-type').value,companyName:document.getElementById('f-company').value,name:document.getElementById('f-company').value,contactName:document.getElementById('f-contact').value,email:document.getElementById('f-email').value,phone:document.getElementById('f-phone').value,website:document.getElementById('f-website').value,specialty:document.getElementById('f-specialty').value,state:document.getElementById('f-state').value.toUpperCase(),city:document.getElementById('f-city').value,googleRating:parseFloat(document.getElementById('f-rating').value)||0,reviewCount:parseInt(document.getElementById('f-reviews').value)||0,yearsInBusiness:parseInt(document.getElementById('f-years').value)||0,bbbRating:document.getElementById('f-bbb').value,bbbAccredited:document.getElementById('f-bbb').value.startsWith('A'),validatedDate:document.getElementById('f-valdate').value||null,notes:document.getElementById('f-notes').value,status:'Cold',lat:0,lng:0};if(!b.companyName){alert('Company name required');return;}await fetch('/api/builders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});await loadVB();closeAddBuilder();if(b.state===currentState)renderPanel(currentState);alert(`${b.companyName} added!`);}
+async function saveBuilder(){
+  const b={type:document.getElementById('f-type').value,companyName:document.getElementById('f-company').value,name:document.getElementById('f-company').value,contactName:document.getElementById('f-contact').value,email:document.getElementById('f-email').value,phone:document.getElementById('f-phone').value,website:document.getElementById('f-website').value,specialty:document.getElementById('f-specialty').value,state:document.getElementById('f-state').value.toUpperCase(),city:document.getElementById('f-city').value,googleRating:parseFloat(document.getElementById('f-rating').value)||0,reviewCount:parseInt(document.getElementById('f-reviews').value)||0,yearsInBusiness:parseInt(document.getElementById('f-years').value)||0,bbbRating:document.getElementById('f-bbb').value,bbbAccredited:document.getElementById('f-bbb').value.startsWith('A'),validatedDate:document.getElementById('f-valdate').value||null,notes:document.getElementById('f-notes').value,status:'Cold',lat:0,lng:0};
+  if(!b.companyName){alert('Company name required');return;}
+  await fetch('/api/builders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});
+  await loadVB();closeAddBuilder();if(b.state===currentState)renderPanel(currentState);alert(`${b.companyName} added!`);
+}
 
 window.addEventListener('resize',()=>{if(topoStates){if(drillLevel==='county')drawCounties();else draw();}});
 
-// Store Google key for geocoding search
 let GKEY='';
 fetch('/api/config').then(r=>r.json()).then(d=>GKEY=d.gkey||'').catch(()=>{});
-
-// ── EMAIL FUNCTIONS ──
-let emailBuilderId = null;
-
-function openEmail(id) {
-  emailBuilderId = id;
-  const all = [...VB.validated,...VB.prospects,...VB.clientBrought];
-  const b = all.find(x => x.id === id);
-  document.getElementById('email-overlay').style.display = 'flex';
-  document.getElementById('email-builder-name').textContent = b ? (b.companyName||b.name) : '';
-  document.getElementById('email-to').value = b && b.email ? b.email : '';
-  document.getElementById('email-subject').value = '';
-  document.getElementById('email-body').value = '';
-  document.getElementById('email-template').value = '';
-  document.getElementById('email-status').textContent = '';
-}
-
-function closeEmail() {
-  document.getElementById('email-overlay').style.display = 'none';
-  emailBuilderId = null;
-}
-
-async function loadTemplate() {
-  const key = document.getElementById('email-template').value;
-  if (!key || !emailBuilderId) return;
-  try {
-    const res = await fetch(`/api/templates/${key}/${emailBuilderId}`);
-    const data = await res.json();
-    document.getElementById('email-subject').value = data.subject || '';
-    document.getElementById('email-body').value = data.body || '';
-    if (data.to) document.getElementById('email-to').value = data.to;
-  } catch(e) { console.log('Template load error', e); }
-}
-
-async function sendEmail() {
-  const to = document.getElementById('email-to').value.trim();
-  const subject = document.getElementById('email-subject').value.trim();
-  const body = document.getElementById('email-body').value.trim();
-  const templateKey = document.getElementById('email-template').value;
-  const statusEl = document.getElementById('email-status');
-
-  if (!to) { statusEl.style.color='var(--t3)'; statusEl.textContent = 'ERROR: No recipient email'; return; }
-  if (!subject) { statusEl.style.color='var(--t3)'; statusEl.textContent = 'ERROR: No subject'; return; }
-
-  statusEl.style.color='var(--muted)'; statusEl.textContent = 'SENDING...';
-
-  try {
-    const res = await fetch('/api/send-email', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ builderId: emailBuilderId, templateKey, customSubject: subject, customBody: body, toEmail: to })
-    });
-    const data = await res.json();
-    if (data.success) {
-      statusEl.style.color='var(--t1)';
-      statusEl.textContent = '&#10003; EMAIL SENT SUCCESSFULLY';
-      await loadVB();
-      setTimeout(closeEmail, 2000);
-    } else {
-      statusEl.style.color='var(--t3)';
-      statusEl.textContent = 'ERROR: ' + (data.error || 'Unknown error');
-    }
-  } catch(e) {
-    statusEl.style.color='var(--t3)';
-    statusEl.textContent = 'ERROR: ' + e.message;
-  }
-}
 
 fetch('/states-10m.json').then(r=>r.json()).then(data=>{
   topoStates=topojson.feature(data,data.objects.states);
   const ldr=document.getElementById('loader');
-  ldr.classList.add('hidden'); ldr.style.display='none'; ldr.style.zIndex='-1';
-  draw();
-  loadVB();
-}).catch(e=>document.getElementById('loader').innerHTML='<div class="ltxt" style="color:var(--t3)">ERROR LOADING MAP</div>');
+  ldr.classList.add('hidden');ldr.style.display='none';
+  draw();loadVB();
+}).catch(e=>{document.getElementById('loader').innerHTML='<div class="ltxt" style="color:var(--t3)">ERROR LOADING MAP</div>';});
 </script>
 </body>
 </html>
